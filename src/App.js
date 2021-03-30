@@ -7,18 +7,16 @@ import './App.css';
 
 const App = () => {
 	const [autorizaton, setAutorizaton] = useState(false);
+
   return (
     <section className="main-section">
-        {
-          !autorizaton &&
-          <Autorization
-            setAutorizaton={setAutorizaton}
-          />
-        }
-      {
-        autorizaton &&
-        <Body/>
-      }
+      {!autorizaton && (
+        <Autorization
+          autorizaton={autorizaton}
+          setAutorizaton={setAutorizaton}
+        />
+      )}
+      {autorizaton && <Body/>}
     </section>
   );
 };

@@ -27,11 +27,13 @@ const Body = () => {
 
 	const mainBodyRef = useRef(null);
 	const inputMessage = useRef(null);
+	const popUpEdit = useRef(null);
+	const popUpSmile = useRef(null);
 
 	useEffect(() => {
 		setHeightScroll(mainBodyRef.current.scrollHeight);
 		scrollToBottom();
- });
+	});
 
 	useEffect(() => {
  		renderData('workChat', setWorkChatHistory);
@@ -91,7 +93,7 @@ const Body = () => {
 		scrollToBottom();
 	};
 
-	const setDataSticker = (typeChat, setTypeChat, key) => {
+	const setDataSticker = (typeChat, setTypeChat) => {
 		setTypeChat([
 			...typeChat, 
 			{
@@ -203,6 +205,23 @@ const Body = () => {
 		inputMessage.current.value = '';
 	};
 
+	const checkPopUps = (e) => {
+		checkPoUpEditClick(e);
+		checkPoUpSmile(e);
+	}
+
+	const checkPoUpEditClick = (e) => {
+		if (statePopUpEditMessage && e.target !== popUpEdit) {
+			setStatePopUpEditMessage(false);
+		}
+	};
+
+	const checkPoUpSmile = (e) => {
+		if (statePopUpSelectSmile && e.target !== popUpSmile) {
+			setStatePopUpSelectSmile(false);
+		}
+	};
+
 	const addSmile = (emoji) => {
 		inputMessage.current.value = inputMessage.current.value + String.fromCodePoint(emoji); 
 	};
@@ -217,10 +236,13 @@ const Body = () => {
 	};
 
 	return (
-		<div className="wrapper-main">
+		<div className="wrapper-main"
+			onClick={(e) => checkPopUps(e)}
+		>
 			{
 				statePopUpEditMessage && 
 				<PopUpEditMessage
+					popUpEdit={popUpEdit}
 					mousePositionX={mousePositionX}
 					mousePositionY={mousePositionY}
 					deleteMessage={deleteMessage}
@@ -305,6 +327,7 @@ const Body = () => {
 				{
 					statePopUpSelectSmile && 
 					<PopUpSelectSmile
+						popUpSmile={popUpSmile}
 						addSmile={addSmile}
 					/>
 				}

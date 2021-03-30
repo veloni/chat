@@ -1,22 +1,47 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './Autorization.scss';
 
-const Autorizaation = ({ setAutorizaton }) => {
-  const [message, setMessage] = useState(null);
-  const loginRef = useRef(null);
-  const passwordRef = useRef(null);
+const Autorization = ({ autorizaton, setAutorizaton }) => {
+	const [isSubmited, setIsSubmited] = useState(false);
+	const [loginValue, setLoginValue] = useState('admin');
+	const [passwordValue, setPasswordValue] = useState('admin');
+
+	useEffect(() => {
+		const localLogin = JSON.parse(localStorage.getItem('userLogin'));
+		const localPassword = JSON.parse(localStorage.getItem('userPassword'));
+
+		if (localLogin !== loginValue && localPassword !== passwordValue) { return; };
+
+		setAutorizaton(true);
+ 	}, []);
 
   const checkLoginPass = () => {
-    if (
-      loginRef.current.value === 'admin' && 
-      passwordRef.current.value === 'admin'
-    ) {
-      setAutorizaton(true);
-      } else {
-        setMessage('incorect login or password')
-      }
+		const isLoginCorrect = loginValue === 'admin';
+		const isPasswordCorrect = passwordValue === 'admin';
+		const isAutorizationPassed = isLoginCorrect && isPasswordCorrect;
+
+		setIsSubmited(true);
+
+		if (!isAutorizationPassed) { return; }
+
+		localStorage.setItem('userLogin', JSON.stringify(loginValue));  
+		localStorage.setItem('userPassword', JSON.stringify(passwordValue));  
+
+    setAutorizaton(true);
   };
+
+	const handleLoginChange = (value) => {
+		setIsSubmited(false);
+		setLoginValue(value);
+	};
+
+	const handlePasswordChange = (value) => {
+		setIsSubmited(false);
+		setPasswordValue(value);
+	};
+
+	const isWarningMessageVisible = isSubmited && !autorizaton;
 
 	return (
 		<div className="wrapper-autorization">
@@ -24,18 +49,18 @@ const Autorizaation = ({ setAutorizaton }) => {
 				<span className="title-autorization">
 					Autorization
 				</span>
-				<span className="message">
-					{message}
-				</span>
+				{isWarningMessageVisible && <span className="message">
+					incorect login or password
+				</span>}
 				<div className="wrapper-login-password">
 					<div className="wrapper-login">
 						<span className="text-autoriztion">
 							login
 						</span>
-						<input 
-							ref={loginRef}
+						<input
 							className="input-login"
-							defaultValue="admin"
+							defaultValue={loginValue}
+							onChange={(e) => handleLoginChange(e.target.value)}
 						>
 						</input>
 					</div>
@@ -43,14 +68,14 @@ const Autorizaation = ({ setAutorizaton }) => {
 					<span className="text-autoriztion">
 							password
 						</span>
-						<input 
-							ref={passwordRef}
+						<input
 							className="input-password"
-							defaultValue="admin"
+							defaultValue={passwordValue}
+							onChange={(e) => handlePasswordChange(e.target.value)}
 						>
 						</input>
 					</div>
-					<button 
+					<button
 						className="autorization"
 						onClick={() => checkLoginPass()}
 					>
@@ -62,5 +87,4 @@ const Autorizaation = ({ setAutorizaton }) => {
 	);
 };
 
-export default Autorizaation;
-
+export default Autorization;

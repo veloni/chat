@@ -8,7 +8,16 @@ import iconEdit from './svg/edit.svg';
 import iconClose from './svg/close.svg'; 
 import iconSticker from './svg/sticker/sticker.png'; 
 
-const Footer = ({ loadLocalStorage, addMessage, inputMessage, statePopUpSelectSmile, setStatePopUpSelectSmile, addSticker, editTextState, closeEditor }) => {
+const Footer = ({ 
+	loadLocalStorage, 
+	addMessage, 
+	inputMessage, 
+	statePopUpSelectSmile, 
+	setStatePopUpSelectSmile, 
+	addSticker, 
+	editTextState, 
+	closeEditor 
+}) => {
 	return (
     <div className="wrapper-footer">
 			<div className="wrapper-icon-footer">
