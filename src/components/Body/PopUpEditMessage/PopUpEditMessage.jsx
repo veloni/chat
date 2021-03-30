@@ -8,32 +8,28 @@ const PopUpEditMessage = ({
 	deleteMessage, 
 	editMessage,
 	popUpEdit,
-}) => {
-	mousePositionY = parseInt(mousePositionY) - 100;
-	
-	return (
-    <div
-			className="wrapper-pop-up"
-			ref={popUpEdit}
-			style={{ 
-				top: `${mousePositionY}px`, 
-				left: mousePositionX, 
-			}}
+}) => (
+	<div
+		className="wrapper-pop-up"
+		ref={popUpEdit}
+		style={{ 
+			top: `${parseInt(mousePositionY) - 100}px`, 
+			left: mousePositionX, 
+		}}
+	>
+		<div 
+			className="pop-up-edit-delete"
+			onClick={() => editMessage()}
 		>
-			<div 
-				className="pop-up-edit-delete"
-				onClick={(e) => editMessage()}
-			>
-				Редактировать
-			</div>
-			<div 
-				className="pop-up-edit-delete"
-				onClick={(e) => deleteMessage()}
-			>
-				Удалить 
-			</div>
+			Редактировать
 		</div>
+		<div 
+			className="pop-up-edit-delete"
+			onClick={() => deleteMessage()}
+		>
+			Удалить 
+		</div>
+	</div>
 	);
-};
 
 export default PopUpEditMessage;

@@ -2,9 +2,7 @@ import React from 'react';
 
 import './Aside.scss';
 
-const Aside = ({ setSwitchChat, switchСhat }) => {
-
-	return (
+const Aside = ({ setSwitchChat, switchСhat }) => (
     <div className="wrapper-aside"> 
 			<div className="header-aside">
 				<span 
@@ -13,7 +11,6 @@ const Aside = ({ setSwitchChat, switchСhat }) => {
 				>
 					Work-chat
 				</span>
-
 				<span 
 					className={`icon-work-chat ${switchСhat ? 'active-chat-button' : '' }`}
 					onClick={() => setSwitchChat(true)}
@@ -21,15 +18,12 @@ const Aside = ({ setSwitchChat, switchСhat }) => {
 					Fun-chat
 				</span>
 			</div>
-
 			<div className="list-users">
 				<div className="wrapper-list-users">
 					users list
 				</div>
 			</div>
-
 		</div>
 	);
-};
-
+	
 export default Aside;

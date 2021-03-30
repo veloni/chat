@@ -11,6 +11,8 @@ import sticker from './sticker/sticker.png';
 import './Body.scss';
 
 const Body = () => {
+	const [isLoadMessage, setIsLoadMessage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
+
 	const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
 
@@ -31,9 +33,12 @@ const Body = () => {
 	const popUpSmile = useRef(null);
 
 	useEffect(() => {
-		setHeightScroll(mainBodyRef.current.scrollHeight);
-		scrollToBottom();
-	});
+		addMessageFirstRender();
+	}, []);
+
+	useEffect(() => {
+		addMessageFirstRender();
+	}, []);
 
 	useEffect(() => {
  		renderData('workChat', setWorkChatHistory);
@@ -43,13 +48,66 @@ const Body = () => {
 		renderData('funChat', setFunChatHistory); 
   }, []);
 
+	 const addMessageFirstRender = () => {
+		if (isLoadMessage) { return; }
+		let firstLoadMessageFunChat = 
+			[
+				{
+					date: "12:02", 
+					message: "Я вас категорически приветсвую 😄",
+					isImg: false,
+					id: '0',
+				},
+				{
+					date: "12:25",  
+					message: "И я вас категорически приветсвую 😀",
+					isImg: false,
+					id: '1',
+				},
+				{
+					date: "20:20", 
+					message: "Клим Климыч добрый вечер",
+					isImg: false,
+					id: '2',
+				}
+			];
+
+		let firstLoadMessageWorkChat = 
+			[
+				{
+					date: "08:02", 
+					message: "Опять сервак упал",
+					isImg: false,
+					id: '0',
+				},
+				{
+					date: "12:56",  
+					message: "Встань и иди",
+					isImg: false,
+					id: '1',
+				},
+				{
+					date: "20:20", 
+					message: "Ну что поделать",
+					isImg: false,
+					id: '2',
+				}
+			];
+
+		localStorage.setItem('funChat', JSON.stringify(firstLoadMessageFunChat));
+		localStorage.setItem('workChat', JSON.stringify(firstLoadMessageWorkChat));
+		localStorage.setItem('firstLoad', JSON.stringify(true));
+
+		setIsLoadMessage(true);
+	};
+
 	const renderData = (key, setType ) => {
 		const localHistory = JSON.parse(localStorage.getItem(key));
 		!!localHistory && setType(localHistory);
 	};
 
 	const addMessage = (e) => {
-		loadLocalStorage();  
+		setLocalStorage();  
 		
 		if (e.key === 'Enter') {
 		 	e.preventDefault();
@@ -60,11 +118,9 @@ const Body = () => {
 				return;
 			}
 
-			if (switchСhat) { 
-				setData(funChatHistory, setFunChatHistory, 'funChat', e);
-			} else { 
-			setData(workChatHistory, setWorkChatHistory, 'workChat', e);
-		 	} 
+			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
+			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
+
 			scrollToBottom();
 
 		 	inputMessage.current.value = ''; 
@@ -84,12 +140,9 @@ const Body = () => {
 	};
 
 	const addSticker = () => {
-		if (switchСhat) { 
-			setDataSticker(funChatHistory, setFunChatHistory, 'funChat');
-		} else {
-			setDataSticker(workChatHistory, setWorkChatHistory, 'workChat');
-		}
-
+		switchСhat && setDataSticker(funChatHistory, setFunChatHistory, 'funChat');
+		!switchСhat && setDataSticker(workChatHistory, setWorkChatHistory, 'workChat');
+		
 		scrollToBottom();
 	};
 
@@ -110,7 +163,9 @@ const Body = () => {
 		const hour = date.getHours();
 		let min = date.getMinutes();
 
- 		if (min < 10) { min = `0${min}`}; 
+ 		if (min < 10) { 
+			min = `0${min}`;
+		}; 
 
 		return (`${hour}:${min}`);
 	};
@@ -126,44 +181,31 @@ const Body = () => {
 
 	const deleteMessage = () => {
 		setStatePopUpEditMessage(false);
+
 		let localHistory;
 
-		if (switchСhat) {
-			localHistory = JSON.parse(localStorage.getItem('funChat'));
-		} else {
-			localHistory = JSON.parse(localStorage.getItem('workChat'));
-		}
+		localHistory = giveLocalHistory();
 
-		localHistory.map(function(item, index) {
+		localHistory.map((item, index) => {
 			if (item.id === whatClick) {
 				localHistory.splice(index, 1);
 				return;
 			}
 		});
 
-		if (switchСhat) {
-			localStorage.setItem('funChat', JSON.stringify(localHistory));  
- 	 		renderData('funChat', setFunChatHistory); 
-		} else {
-			localStorage.setItem('workChat', JSON.stringify(localHistory));  
- 	 		renderData('workChat', setWorkChatHistory); 
-		}
+		setLocalAndRenderForAllChat(localHistory);
 	};
 
 	const editMessage = () => {
-		loadLocalStorage();
+		setLocalStorage();
 		setEditTextState(true);
 		setStatePopUpEditMessage(false);
 
 		let localHistory;
 
-		if (switchСhat) {
-			localHistory = JSON.parse(localStorage.getItem('funChat'));
-		} else {
-			localHistory = JSON.parse(localStorage.getItem('workChat'));
-		}
+		localHistory = giveLocalHistory();
 	
-		localHistory.map(function(item) {
+		localHistory.map((item) => {
 			if (item.isImg === true) { 
 				return;
 			}
@@ -177,26 +219,16 @@ const Body = () => {
 	const editerMessage = () => {
 		let localHistory;
 
-		if (switchСhat) {
-			localHistory = JSON.parse(localStorage.getItem('funChat'));
-		} else {
-			localHistory = JSON.parse(localStorage.getItem('workChat'));
-		}
+		localHistory = giveLocalHistory();
 
-		localHistory.map(function(item) {
+		localHistory.map((item) => {
 			if (item.id === whatClick) {
 				item.message = inputMessage.current.value;
 			}
 		});
 		
-		if (switchСhat) {
-			localStorage.setItem('funChat', JSON.stringify(localHistory));  
- 	 		renderData('funChat', setFunChatHistory); 
-		} else {
-			localStorage.setItem('workChat', JSON.stringify(localHistory));  
- 	 		renderData('workChat', setWorkChatHistory); 
-		}
-
+		setLocalAndRenderForAllChat(localHistory);
+		
 		closeEditor();
 	};
 
@@ -217,9 +249,8 @@ const Body = () => {
 	};
 
 	const checkPoUpSmile = (e) => {
-		if (statePopUpSelectSmile && e.target !== popUpSmile) {
-			setStatePopUpSelectSmile(false);
-		}
+		const isPopUpSmile = (statePopUpSelectSmile && e.target !== popUpSmile);
+		isPopUpSmile && setStatePopUpSelectSmile(!isPopUpSmile);
 	};
 
 	const addSmile = (emoji) => {
@@ -227,28 +258,43 @@ const Body = () => {
 	};
 
 	const scrollToBottom = () => {
+		setHeightScroll(mainBodyRef.current.scrollHeight);
 		mainBodyRef.current.scroll(0, heightScroll);
 	};
 	
-	const loadLocalStorage = () => {
+	const setLocalStorage = () => {
 		localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
 		localStorage.setItem('workChat', JSON.stringify(workChatHistory));
 	};
+
+	const giveLocalHistory = () => {
+		if (switchСhat) {
+			return (JSON.parse(localStorage.getItem('funChat')));
+		} 
+		return (JSON.parse(localStorage.getItem('workChat')));
+	};
+
+	const setLocalAndRender = (typeChat, setTypeChat, localHistory) => {
+		localStorage.setItem(typeChat, JSON.stringify(localHistory));  
+		renderData(typeChat, setTypeChat);
+	}
+
+	const setLocalAndRenderForAllChat = (localHistory) => {
+		switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
+		!switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
+	}
 
 	return (
 		<div className="wrapper-main"
 			onClick={(e) => checkPopUps(e)}
 		>
-			{
-				statePopUpEditMessage && 
-				<PopUpEditMessage
-					popUpEdit={popUpEdit}
-					mousePositionX={mousePositionX}
-					mousePositionY={mousePositionY}
-					deleteMessage={deleteMessage}
-					editMessage={editMessage}
-				/>
-			}
+			{statePopUpEditMessage && <PopUpEditMessage
+				popUpEdit={popUpEdit}
+				mousePositionX={mousePositionX}
+				mousePositionY={mousePositionY}
+				deleteMessage={deleteMessage}
+				editMessage={editMessage}
+			/>}
 			<Aside
 				setSwitchChat={setSwitchChat}
 				switchСhat={switchСhat}
@@ -269,19 +315,16 @@ const Body = () => {
 									className="wrapper-message-text"
 									onClick={(e) => createPopUp(e, item.id)}
 								>
-									{	
-										!item.isImg &&
+									{!item.isImg &&
 										<span className="text-in-message">
 											{item.message}
-										</span>
-									}
-									{	
-										item.isImg && 
+										</span>}
+									{item.isImg && 
 										<img
 										className="wrapper-sticker"
 										src={item.message}
-										/>
-									}
+										alt={"sticler"}
+										/>}
 									<div className="wrapper-time-in-message">
 										<span className="time-in-message"
 										>
@@ -291,7 +334,7 @@ const Body = () => {
 								</div>
 							</div>
 						))} 
-						{!switchСhat && workChatHistory.map((item, key) => (
+						{!switchСhat && workChatHistory.map((item, key) =>  (
 							<div 
 								key={key}
 								className="wrapper-message"
@@ -300,19 +343,16 @@ const Body = () => {
 									className="wrapper-message-text"
 									onClick={(e) => createPopUp(e, item.id)}
 								>
-									{	
-										!item.isImg &&
+									{!item.isImg &&
 										<span className="text-in-message">
 											{item.message}
-										</span>
-									}
-									{	
-										item.isImg && 
+										</span>}
+									{item.isImg && 
 										<img
-											className="wrapper-sticker"
-											src={item.message}
-										/>
-									}
+										className="wrapper-sticker"
+										src={item.message}
+										alt={"sticler"}
+										/>}
 									<div className="wrapper-time-in-message">
 										<span className="time-in-message"
 										>
@@ -321,18 +361,15 @@ const Body = () => {
 									</div>
 								</div>
 							</div>
-						))} 
+						))}
+						</div>
 					</div>
-				</div>
-				{
-					statePopUpSelectSmile && 
-					<PopUpSelectSmile
-						popUpSmile={popUpSmile}
-						addSmile={addSmile}
-					/>
-				}
+				{statePopUpSelectSmile && <PopUpSelectSmile
+					popUpSmile={popUpSmile}
+					addSmile={addSmile}
+				/>}
 				<Footer
-					loadLocalStorage={loadLocalStorage}
+					setLocalStorage={setLocalStorage}
 					addMessage={addMessage}
 					statePopUpSelectSmile={statePopUpSelectSmile}
 					setStatePopUpSelectSmile={setStatePopUpSelectSmile}
