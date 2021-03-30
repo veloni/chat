@@ -22,7 +22,7 @@ const Body = () => {
 	const [whatClick, setWhatClick] = useState(null);
 	const [editTextState, setEditTextState] = useState(false);
 
-	const [heightScroll, setHeightScroll] = useState(null);
+/* 	const [heightScroll, setHeightScroll] = useState(null); */
 
 	const [funChatHistory, setFunChatHistory] = useState([]);
 	const [workChatHistory, setWorkChatHistory] = useState([]);
@@ -31,10 +31,6 @@ const Body = () => {
 	const inputMessage = useRef(null);
 	const popUpEdit = useRef(null);
 	const popUpSmile = useRef(null);
-
-	useEffect(() => {
-		addMessageFirstRender();
-	}, []);
 
 	useEffect(() => {
 		addMessageFirstRender();
@@ -57,19 +53,22 @@ const Body = () => {
 					message: "Я вас категорически приветсвую 😄",
 					isImg: false,
 					id: '0',
+					nickName: "Владимир"
 				},
 				{
 					date: "12:25",  
 					message: "И я вас категорически приветсвую 😀",
 					isImg: false,
 					id: '1',
+					nickName: "Клим"
 				},
 				{
 					date: "20:20", 
 					message: "Клим Климыч добрый вечер",
 					isImg: false,
 					id: '2',
-				}
+					nickName: "Сан Саныч"
+				},
 			];
 
 		let firstLoadMessageWorkChat = 
@@ -79,19 +78,22 @@ const Body = () => {
 					message: "Опять сервак упал",
 					isImg: false,
 					id: '0',
+					nickName: "Сан Саныч"
 				},
 				{
 					date: "12:56",  
 					message: "Встань и иди",
 					isImg: false,
 					id: '1',
+					nickName: "Владимир"
 				},
 				{
 					date: "20:20", 
 					message: "Ну что поделать",
 					isImg: false,
 					id: '2',
-				}
+					nickName: "Владимир"
+				},
 			];
 
 		localStorage.setItem('funChat', JSON.stringify(firstLoadMessageFunChat));
@@ -108,7 +110,12 @@ const Body = () => {
 
 	const addMessage = (e) => {
 		setLocalStorage();  
-		
+
+		if (e.shiftKey && e.ctrlKey) {
+			inputMessage.current.value = `${inputMessage.current.value}\n`;
+			return;
+		}
+
 		if (e.key === 'Enter') {
 		 	e.preventDefault();
 			if (!inputMessage.current.value) { return; }
@@ -135,6 +142,7 @@ const Body = () => {
 				message: e.target.value,
 				isImg: false,
 				id: typeChat.length,
+				nickName: "Ваши сообщения",
 			},
 		]);
 	};
@@ -154,6 +162,7 @@ const Body = () => {
 				message: sticker,
 				isImg: true,
 				id: typeChat.length,
+				nickName: "Ваши сообщения",
 			},
 		]);
 	};
@@ -258,8 +267,7 @@ const Body = () => {
 	};
 
 	const scrollToBottom = () => {
-		setHeightScroll(mainBodyRef.current.scrollHeight);
-		mainBodyRef.current.scroll(0, heightScroll);
+		mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
 	};
 	
 	const setLocalStorage = () => {
@@ -315,19 +323,23 @@ const Body = () => {
 									className="wrapper-message-text"
 									onClick={(e) => createPopUp(e, item.id)}
 								>
-									{!item.isImg &&
-										<span className="text-in-message">
-											{item.message}
-										</span>}
-									{item.isImg && 
-										<img
-										className="wrapper-sticker"
-										src={item.message}
-										alt={"sticler"}
-										/>}
+									<div className="wrapper-nick-message">
+										<div className="wrapper-nick-name">
+											{item.nickName}
+										</div>
+										{!item.isImg &&
+											<span className="text-in-message">
+												{item.message}
+											</span>}
+										{item.isImg && 
+											<img
+											className="wrapper-sticker"
+											src={item.message}
+											alt={"sticler"}
+											/>}
+									</div>
 									<div className="wrapper-time-in-message">
-										<span className="time-in-message"
-										>
+										<span className="time-in-message">
 											{item.date}
 										</span>
 									</div>
@@ -343,25 +355,29 @@ const Body = () => {
 									className="wrapper-message-text"
 									onClick={(e) => createPopUp(e, item.id)}
 								>
-									{!item.isImg &&
-										<span className="text-in-message">
-											{item.message}
-										</span>}
-									{item.isImg && 
-										<img
-										className="wrapper-sticker"
-										src={item.message}
-										alt={"sticler"}
-										/>}
+									<div className="wrapper-nick-message">
+										<div className="wrapper-nick-name">
+											{item.nickName}
+										</div>
+										{!item.isImg &&
+											<span className="text-in-message">
+												{item.message}
+											</span>}
+										{item.isImg && 
+											<img
+											className="wrapper-sticker"
+											src={item.message}
+											alt={"sticler"}
+											/>}
+									</div>
 									<div className="wrapper-time-in-message">
-										<span className="time-in-message"
-										>
+										<span className="time-in-message">
 											{item.date}
 										</span>
 									</div>
 								</div>
 							</div>
-						))}
+						))} 
 						</div>
 					</div>
 				{statePopUpSelectSmile && <PopUpSelectSmile
