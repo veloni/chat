@@ -89,7 +89,7 @@ const Body = () => {
 		}
 
 		scrollToBottom();
-	}
+	};
 
 	const setDataSticker = (typeChat, setTypeChat, key) => {
 		setTypeChat([
@@ -149,6 +149,7 @@ const Body = () => {
 	};
 
 	const editMessage = () => {
+		loadLocalStorage();
 		setEditTextState(true);
 		setStatePopUpEditMessage(false);
 
@@ -195,25 +196,25 @@ const Body = () => {
 		}
 
 		closeEditor();
-	}
+	};
 
 	const closeEditor = () => {
 		setEditTextState(false);
 		inputMessage.current.value = '';
-	}
+	};
 
 	const addSmile = (emoji) => {
 		inputMessage.current.value = inputMessage.current.value + String.fromCodePoint(emoji); 
-	}
+	};
 
 	const scrollToBottom = () => {
 		mainBodyRef.current.scroll(0, heightScroll);
-	}
+	};
 	
 	const loadLocalStorage = () => {
 		localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
 		localStorage.setItem('workChat', JSON.stringify(workChatHistory));
-	}
+	};
 
 	return (
 		<div className="wrapper-main">
@@ -268,7 +269,6 @@ const Body = () => {
 								</div>
 							</div>
 						))} 
-
 						{!switchСhat && workChatHistory.map((item, key) => (
 							<div 
 								key={key}
