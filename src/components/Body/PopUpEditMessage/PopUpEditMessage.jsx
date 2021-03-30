@@ -4,6 +4,7 @@ import './PopUpEditMessage.scss';
 
 const PopUpEditMessage = ({ mousePositionX, mousePositionY, deleteMessage, editMessage }) => {
 	mousePositionY = parseInt(mousePositionY) - 100;
+	
 	return (
     <div
 			className="wrapper-pop-up"

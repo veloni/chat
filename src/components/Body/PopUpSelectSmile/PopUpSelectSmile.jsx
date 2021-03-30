@@ -11,6 +11,7 @@ const PopUpSelectSmile = ({ addSmile }) => {
 		<div className="wrapper-pop-up-smiles">
 			{[...Array(20)].map((item, index) => (
 				<div 
+					key={index}
 					className="smile-icon"
 					onClick={() => addSmile(emojis[index])}
 				> 

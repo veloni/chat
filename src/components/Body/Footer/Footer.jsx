@@ -11,7 +11,6 @@ import iconSticker from './svg/sticker/sticker.png';
 const Footer = ({ loadLocalStorage, addMessage, inputMessage, statePopUpSelectSmile, setStatePopUpSelectSmile, addSticker, editTextState, closeEditor }) => {
 	return (
     <div className="wrapper-footer">
-
 			<div className="wrapper-icon-footer">
 				<img 
 					src={iconAddFiles} 
@@ -19,7 +18,6 @@ const Footer = ({ loadLocalStorage, addMessage, inputMessage, statePopUpSelectSm
 					alt="iconAddFiles"
 				/>
 			</div>
-
 			<div className="wrapper-text-area-message">
 				<textarea 
 					ref={inputMessage}
@@ -57,7 +55,6 @@ const Footer = ({ loadLocalStorage, addMessage, inputMessage, statePopUpSelectSm
 					alt="iconAddFiles"
 				/>
 			</div>
-
 			<div className="wrapper-icon-footer">
 				<img 
 					onMouseDown={() => addSticker()}
@@ -68,7 +65,6 @@ const Footer = ({ loadLocalStorage, addMessage, inputMessage, statePopUpSelectSm
 					alt="iconAddFiles"
 				/>
 			</div>
-
 		</div>
 	);
 };

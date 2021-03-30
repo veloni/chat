@@ -299,7 +299,7 @@ const Body = () => {
 									</div>
 								</div>
 							</div>
-							))} 
+						))} 
 					</div>
 				</div>
 				{
