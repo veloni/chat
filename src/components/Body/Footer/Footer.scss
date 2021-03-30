@@ -1,0 +1,63 @@
+.wrapper-footer {
+  height: 7%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.wrapper-icon-footer {
+  height: 100%;
+  width: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-footer {
+  height: 2vw;
+  width: 2vw;
+  cursor: pointer;
+}
+
+.wrapper-text-area-message {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  height: 100%;
+}
+
+.text-area-message {
+  font-size: 1.5vw;
+  width: 95%;
+  height: 90%;
+  resize: none;
+  border: none
+}
+
+.icon-close {
+  height: 1.5vw;
+  width: 1.5vw;
+  cursor: pointer;
+}
+
+.icon-edit {
+  height: 1.5vw;
+  width: 1.5vw;
+}
+
+.wrapper-icon-edit-delete {
+  height: 45%;
+  width: 5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper-icon-for-edit {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+

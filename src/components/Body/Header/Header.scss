@@ -1,0 +1,32 @@
+.wrapper-header {
+  height: 5%;
+  width: 100%;
+  border-bottom: 4px solid #CEE0F2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.wrapper-info-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 10%;
+}
+
+.text-header { 
+  font-size: 1.5vw; 
+}
+
+.wraper-search-icon {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 20px;
+}
+
+.icon-search {
+  height: 80%;
+}

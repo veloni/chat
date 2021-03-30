@@ -1,38 +1,80 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.main-section{
+  height: 100vh;
   display: flex;
-  flex-direction: column;
+}
+
+.wrapper-autorization {
+  height: 100%;
+  width:  100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.box-autorization {
+  height: 300px;
+  width: 400px;
+  background-color: #CEE0F2;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border: 3px solid #CEE0F2;
+  border-radius: 35px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.wrapper-login-password {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.title-autorization {
+  margin-top: 20px;
+  font-size: 1.7vw;
+}
+
+.message { 
+  height: 30px;
+  color: red;
+}
+
+.text-autoriztion {
+  display: flex;
+  align-items: center;
+}
+
+.wrapper-login {
+  height: 15%;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper-password {
+  height: 15%;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-login {
+  width: 70%;
+}
+
+.input-password {
+  width: 70%;
+}
+
+.autorization {
+  font-size: 20px;
+  cursor: pointer;
+  height: 20%;
+  width: 20%;
+	background-color:#e9e9e9;
+  border-radius: 20px 20px 20px 20px;
+  border: 1px solid black;
 }

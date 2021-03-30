@@ -1,0 +1,43 @@
+.wrapper-aside {
+  height: 100%;
+  width: 20%;
+  background-color: #CEE0F2;
+  border-right: 2px solid #CEE0F2;
+}
+
+.header-aside {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 5%;
+  background-color: #CEE0F2;
+}
+
+.list-users {
+  height: 95%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper-list-users {
+  width: 90%;
+  background-color: #CEE0F2;
+  font-size: 1vw;
+}
+
+.icon-work-chat {
+  font-size: 1vw;
+  cursor: pointer;
+}
+
+.active-chat-button {
+  height: 30px;
+  width: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 0 7px #00008b;
+}
