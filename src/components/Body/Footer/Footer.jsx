@@ -20,6 +20,7 @@ const Footer = ({
 	closeEditor,
 	loadBackgroundImage,
 	deleteBackgroundImage,
+	lengthСheck,
 }) => (
 	<div className="wrapper-footer">
 			<div className="wrapper-icon-for-backgrond-image">
@@ -43,6 +44,7 @@ const Footer = ({
 		<div className="wrapper-text-area-message">
 			<textarea 
 				ref={inputMessage}
+				onChange={(e) => lengthСheck()}
 				onKeyDown={(e) => addMessage(e)}
 				className="text-area-message"
 				placeholder="Write a message"

@@ -9,7 +9,7 @@ const Aside = ({
 	inputSearch, 
 	searchMessage, 
 	isSearch, 
-	endSearch, 
+	clearSearch, 
 	switchСhat, 
 	foundMessageFunChat, 
 	foundMessageWorkChat, 
@@ -20,7 +20,6 @@ const Aside = ({
     <div className="wrapper-aside"> 
 			<div className="wrapper-search-input-icon">
 					<input
-						defaultValue="Клим"
 						className="input-search"
 						ref={inputSearch}
 						onChange={(e) => searchMessage(e)}
@@ -30,7 +29,7 @@ const Aside = ({
 							src={isSearch ? iconClose : iconSearch} 
 							className="icon-search" 
 							alt="iconSearch"
-							onClick={() => endSearch()}
+							onClick={() => clearSearch()}
 						/>
 					</div>
 				</div>

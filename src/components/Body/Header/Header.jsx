@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import './Header.scss';
 
@@ -6,8 +6,9 @@ const Header = ({
 	setSwitchChat, 
 	setIsSearch, 
 	switchСhat,
+	scrollToBottom,
 }) => {
-
+	
 	const clearStorage = () => {
 		localStorage.clear();
 		window.location.reload();
@@ -16,11 +17,13 @@ const Header = ({
 	const switchChatToFun = () => {
 		setIsSearch(false);
 		setSwitchChat(true);
+		scrollToBottom();
 	}
 
 	const switchChatToFWork = () => {
 		setIsSearch(false);
 		setSwitchChat(false);
+		scrollToBottom();
 	}
 	
 	return ( 

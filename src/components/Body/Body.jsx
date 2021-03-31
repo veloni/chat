@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, createRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -42,6 +42,10 @@ const Body = () => {
 	const inputSearch = useRef(null);
 
 	useEffect(() => {
+		scrollToBottom();
+	}, []);
+
+	useEffect(() => {
 		loadMessageFirstEntreance(isLoadMessage, setIsLoadMessage);
 	}, []);
 
@@ -68,6 +72,7 @@ const Body = () => {
 			return;
 		}
 		setLocalStorage();  
+
 		if (e.key === 'Enter') {
 		 	e.preventDefault();
 			if (!inputMessage.current.value) { return; }
@@ -80,7 +85,7 @@ const Body = () => {
 			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
 			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
 
-			scrollToBottom();
+	 		scrollToBottom();  
 
 		 	inputMessage.current.value = ''; 
 		}
@@ -141,7 +146,7 @@ const Body = () => {
 	};
 
 	const deleteMessage = () => {
-		setStatePopUpEditMessage(false);
+	 	setStatePopUpEditMessage(false); 
 
 		let localHistory;
 
@@ -160,7 +165,7 @@ const Body = () => {
 	const editMessage = () => {
 		setLocalStorage();
 		setEditTextState(true);
-		setStatePopUpEditMessage(false);
+		 setStatePopUpEditMessage(false); 
 
 		let localHistory;
 
@@ -218,7 +223,7 @@ const Body = () => {
 	};
 
 	const deleteBackgroundImage = () => {
-		localStorage.setItem('BackgroundImage', JSON.stringify(""));
+		localStorage.setItem('BackgroundImage', JSON.stringify(''));
 		localStorage.setItem('isBackgroundImage', JSON.stringify(false));
 		mainBodyRef.current.style.backgroundImage = 'none';
 	};
@@ -228,7 +233,7 @@ const Body = () => {
 		if (isBackgroundMessage) {
 			mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
 		}
-	}
+	};
 
 	const closeEditor = () => {
 		setEditTextState(false);
@@ -237,12 +242,12 @@ const Body = () => {
 
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
-		checkPoUpSmile(e);
+		statePopUpSelectSmile && checkPoUpSmile(e);
 	};
 
 	const checkPoUpEditClick = (e) => {
 		if (statePopUpEditMessage && e.target !== popUpEdit) {
-			setStatePopUpEditMessage(false);
+		 	setStatePopUpEditMessage(false); 
 		}
 	};
 
@@ -256,12 +261,14 @@ const Body = () => {
 	};
 
 	const scrollToBottom = () => {
-		mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
+		setTimeout(() => {
+			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
+		}, 1);
 	};
 	
 	const setLocalStorage = () => {
-		localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
-		localStorage.setItem('workChat', JSON.stringify(workChatHistory));
+		switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
+		!switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
 	};
 
 	const giveLocalHistory = () => {
@@ -271,29 +278,39 @@ const Body = () => {
 		return (JSON.parse(localStorage.getItem('workChat')));
 	};
 
+	const lengthСheck = () => {
+		if (Number.isInteger(inputMessage.current.value.length / 100)) {
+			inputMessage.current.value = `${inputMessage.current.value}\n`;
+		}
+	};
+
 	const setLocalAndRender = (typeChat, setTypeChat, localHistory) => {
 		localStorage.setItem(typeChat, JSON.stringify(localHistory));  
 		renderData(typeChat, setTypeChat);
-	}
+	};
 
-	const searchMessage = (e) => {
-		
+	const searchMessage = () => {
 		if (!inputSearch.current.value) { 
 			setFoundMessageFunChat(null);	
 			setFoundMessageWorkChat(null);	
 			return; 
-		} 
+		};
 
 		const localHistory = giveLocalHistory();
 
 		setArrayFindMessage([]);
-		
-		localHistory.forEach((item, index) => {
+
+		localHistory.forEach((item,) => {
 			if (item.message.includes(inputSearch.current.value)) {
-						
+				let triplePoint = '...';
+
+				if (item.message.length < 40) { 
+					triplePoint = '';
+				}
+
 				arrayFindMessage.push({
 					date: item.date, 
-					message: `${item.message.substr(0, 20)}...`,
+					message: `${item.message.substr(0, 40)}${triplePoint}`,
 					isImg: item.isImg,
 					id: item.id,
 					nickName: item.nickName,
@@ -308,21 +325,26 @@ const Body = () => {
 	const seeMessage = (id) => {
 		setIsSearch(true);
 		setMessageFocus(id);
-		document.getElementById(id).scrollIntoView();
-		document.getElementById(id).style.backgroundColor = '#CEE0F2';
-	}
 
-	const endSearch = () => {
+		document.getElementById(id).scrollIntoView();
+		document.getElementById(id).classList.add('find-message');
+
+		setTimeout(() => {
+			document.getElementById(id).classList.remove('find-message');
+		}, 2000);
+
+	};
+
+	const clearSearch = () => {
 		if (isSearch) {
 			setIsSearch(false);
-			document.getElementById(messageFocus).style.backgroundColor = 'whitesmoke';
 		}
-	}
+	};
 
 	const setLocalAndRenderForAllChat = (localHistory) => {
-		switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
-		!switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
-	}
+		setLocalAndRender('funChat', setFunChatHistory, localHistory); 
+		setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
+	};
 
 	return (
 		<div className="wrapper-main"
@@ -342,15 +364,17 @@ const Body = () => {
 				seeMessage={seeMessage}
 				inputSearch={inputSearch}
 				isSearch={isSearch}
-				endSearch={endSearch}
+				clearSearch={clearSearch}
 				searchMessage={searchMessage}
 			/>
 			<div className="wrapper-header-body">
 				<Header
+					mainBodyRef={mainBodyRef}
 					switchСhat={switchСhat}
 					setIsSearch={setIsSearch}
 					setSwitchChat={setSwitchChat}
 					setIsSearch={setIsSearch}
+					scrollToBottom={scrollToBottom}
 				/>
 				<div 
 					className="main-body"
@@ -379,6 +403,7 @@ const Body = () => {
 					addSticker={addSticker}
 					editTextState={editTextState}
 					closeEditor={closeEditor}
+					lengthСheck={lengthСheck}
 				/>
 			</div>
 		</div>
