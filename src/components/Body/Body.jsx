@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, createRef } from 'react';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -27,11 +27,15 @@ const Body = () => {
 
 	const [funChatHistory, setFunChatHistory] = useState([]);
 	const [workChatHistory, setWorkChatHistory] = useState([]);
+	const [foundMessage, setFoundMessage] = useState([]);
+	const [arrayMassiveIdFoundMessage, setArrayMassiveIdFoundMessage] = useState([]);
+	const [checkFindId, setCheckFindId] = useState(false);
 
 	const mainBodyRef = useRef(null);
 	const inputMessage = useRef(null);
 	const popUpEdit = useRef(null);
 	const popUpSmile = useRef(null);
+	const inputSearch = useRef(null);
 
 	useEffect(() => {
 		loadMessageFirstEntreance(isLoadMessage, setIsLoadMessage);
@@ -268,6 +272,57 @@ const Body = () => {
 		renderData(typeChat, setTypeChat);
 	}
 
+	const searchMessage = (e) => {
+		if (e.key === 'Enter') {
+			let localHistory = giveLocalHistory();
+
+			localHistory.forEach((item, index) => {
+				if (item.message.includes(inputSearch.current.value)) {
+					setCheckFindId(false);
+					arrayMassiveIdFoundMessage.forEach((element) => {
+						if (element === item.id)  {
+							setCheckFindId(true);
+						} 
+					});
+
+					arrayMassiveIdFoundMessage.push(item.id);
+
+					!checkFindId && 
+					setFoundMessage([
+						...foundMessage, 
+						{
+							date: item.date, 
+							message: item.message,
+							isImg: item.isImg,
+							id: item.id,
+							nickName: item.nickName,
+						},
+					]);
+					
+				}
+			});
+		}
+
+		arrayMassiveIdFoundMessage.forEach((item) => {
+			console.log(item); 
+		}); 
+
+	 	foundMessage.forEach((item) => {
+			console.log(item.message); 
+		}); 
+	};
+
+	const createRefFunction = (id) => {
+/* 		id = createRef();
+		console.log(id);
+		return id; */
+ }
+
+	const seeMessage = (id) => {
+		document.getElementById(id).scrollIntoView();
+		document.getElementById(id).style.backgroundColor = "#CEE0F2";
+	}
+
 	const setLocalAndRenderForAllChat = (localHistory) => {
 		switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
 		!switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
@@ -285,11 +340,16 @@ const Body = () => {
 				editMessage={editMessage}
 			/>}
 			<Aside
+				foundMessage={foundMessage}
 				setSwitchChat={setSwitchChat}
 				switchСhat={switchСhat}
+				seeMessage={seeMessage}
 			/>
 			<div className="wrapper-header-body">
-				<Header/>
+				<Header
+					inputSearch={inputSearch}
+					searchMessage={searchMessage}
+				/>
 				<div 
 					className="main-body"
 					ref={mainBodyRef}
@@ -299,6 +359,7 @@ const Body = () => {
 						workChatHistory={workChatHistory}
 						switchСhat={switchСhat}
 						createPopUp={createPopUp}
+						createRefFunction={createRefFunction}
 					/>
 				</div>
 				{statePopUpSelectSmile && <PopUpSelectSmile

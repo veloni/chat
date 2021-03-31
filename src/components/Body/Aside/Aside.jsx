@@ -2,11 +2,11 @@ import React from 'react';
 
 import './Aside.scss';
 
-const Aside = ({ setSwitchChat, switchСhat }) => { 
+const Aside = ({ setSwitchChat, switchСhat, foundMessage, seeMessage }) => { 
 	const clearStorage = () => {
 		localStorage.clear();
 		window.location.reload();
-	}
+	};
 
 	return (
     <div className="wrapper-aside"> 
@@ -24,15 +24,35 @@ const Aside = ({ setSwitchChat, switchСhat }) => {
 					Fun-chat
 				</span>
 			</div>
-			<div className="list-users">
-				<div className="wrapper-list-users">
-					<button 
-						className="button-clear-storage"
-						onClick={() => clearStorage()}
+			<div className="wrapper-button-clear-storage">
+				<button 
+					className="button-clear-storage"
+					onClick={() => clearStorage()}
+				>
+					ClearStorage
+				</button>
+			</div>
+			<div className="wrapper-find-message">
+				{foundMessage.map((item, key) => (
+					<div 
+						key={key}
+						className="wrapper-found-message"
+						onClick={(e) => seeMessage(item.id)}
 					>
-						ClearStorage
-					</button>
-				</div>
+						<div className="wrapper-find-message-nick-name">
+							<div className="wrapper-find-nick-name">
+								{item.nickName}
+							</div>
+							<div className="wrapper-find-text-message">
+								{item.message}
+							</div>
+						</div>
+
+						<div className="wrapper-time">
+							{item.date}
+						</div>
+					</div>
+				))} 
 			</div>
 		</div>
 	);

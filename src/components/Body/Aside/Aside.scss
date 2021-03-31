@@ -2,7 +2,8 @@
   height: 100%;
   width: 20%;
   background-color: #CEE0F2;
-  border-right: 2px solid #CEE0F2;
+  border-right: 3px solid rgb(136, 179, 204);
+  width: 30%;
 }
 
 .header-aside {
@@ -14,22 +15,25 @@
   background-color: #CEE0F2;
 }
 
-.list-users {
+.wrapper-aside-for-button-and-search {
   height: 95%;
   width: 100%;
   display: flex;
-  justify-content: center;
-}
-
-.wrapper-list-users {
-  width: 90%;
-  background-color: #CEE0F2;
-  font-size: 1vw;
+  align-items: center;
+  flex-direction: column;
 }
 
 .icon-work-chat {
   font-size: 1.5vw;
   cursor: pointer;
+}
+
+.wrapper-button-clear-storage {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .active-chat-button {
@@ -38,6 +42,56 @@
 }
 
 .button-clear-storage {
-  height: 150px;
-  width: 150px;
+  height: 5%;
+  width: 90%;
+  font-size: 1.5vw; 
+  border: 3px solid rgb(136, 179, 204);
+  border-radius: 15px;
+  background-color: #CEE0F2;
+  font-size: 1.5vw;
+  cursor: pointer;
+}
+
+.wrapper-find-message {
+  overflow-y: auto;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+  border-top: 3px solid rgb(136, 179, 204);
+}
+
+.wrapper-found-message {
+  margin-top: 10px;
+  height: auto;
+  width: 90%;
+  display: flex;
+  border: 2px solid rgb(136, 179, 204);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  background-color: whitesmoke;
+  opacity: 0.85;
+}
+
+.wrapper-find-message-nick-name {
+  padding-left: 4px;
+  padding-bottom: 4px;
+}
+
+.wrapper-find-nick-name {
+  height: 40%;
+  font-size: 19px;
+  color: grey;
+}
+
+.wrapper-time {
+  padding-top: 2px;
+  margin-right: 2px;
+  color: #b8b4b4;
+  font-size: 14px;
 }

@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 const RenderMessage = ({ 
 	workChatHistory,
 	funChatHistory,
 	createPopUp,
 	switchСhat,
+	createRefFunction,
 }) => {
+		
 	return (
 		<div className="wrapper-main-body">
 			{switchСhat && funChatHistory.map((item, key) => (
 				<div 
 					key={key}
 					className="wrapper-message"
+					ref={createRefFunction(item.id)}
 				>
 					<div 
+						id={item.id} 
 						className="wrapper-message-text"
 						onClick={(e) => createPopUp(e, item.id)}
 					>
