@@ -27,6 +27,7 @@ const Autorization = ({ autorizaton, setAutorizaton }) => {
 
 		localStorage.setItem('userLogin', JSON.stringify(loginValue));  
 		localStorage.setItem('userPassword', JSON.stringify(passwordValue));  
+		localStorage.setItem('entranceDone', JSON.stringify(true))
 
     setAutorizaton(true);
   };

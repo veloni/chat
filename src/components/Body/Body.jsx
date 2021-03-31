@@ -5,6 +5,8 @@ import Footer from './Footer/Footer';
 import Aside from './Aside/Aside';
 import PopUpEditMessage from './PopUpEditMessage/PopUpEditMessage';
 import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
+import RenderMessage from './Hook/RenderMessage';
+import loadMessageFirstEntreance from './Hook/loadMessageFirstEntreance';
 
 import sticker from './sticker/sticker.png';
 
@@ -12,6 +14,7 @@ import './Body.scss';
 
 const Body = () => {
 	const [isLoadMessage, setIsLoadMessage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
+	const [isBackgroundMessage, setIsBackgroundMessage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
 
 	const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
@@ -22,8 +25,6 @@ const Body = () => {
 	const [whatClick, setWhatClick] = useState(null);
 	const [editTextState, setEditTextState] = useState(false);
 
-/* 	const [heightScroll, setHeightScroll] = useState(null); */
-
 	const [funChatHistory, setFunChatHistory] = useState([]);
 	const [workChatHistory, setWorkChatHistory] = useState([]);
 
@@ -33,7 +34,11 @@ const Body = () => {
 	const popUpSmile = useRef(null);
 
 	useEffect(() => {
-		addMessageFirstRender();
+		loadMessageFirstEntreance(isLoadMessage, setIsLoadMessage);
+	}, []);
+
+	useEffect(() => {
+		firstLoadBackgroundMessage();
 	}, []);
 
 	useEffect(() => {
@@ -44,78 +49,17 @@ const Body = () => {
 		renderData('funChat', setFunChatHistory); 
   }, []);
 
-	 const addMessageFirstRender = () => {
-		if (isLoadMessage) { return; }
-		let firstLoadMessageFunChat = 
-			[
-				{
-					date: "12:02", 
-					message: "Я вас категорически приветсвую 😄",
-					isImg: false,
-					id: '0',
-					nickName: "Владимир"
-				},
-				{
-					date: "12:25",  
-					message: "И я вас категорически приветсвую 😀",
-					isImg: false,
-					id: '1',
-					nickName: "Клим"
-				},
-				{
-					date: "20:20", 
-					message: "Клим Климыч добрый вечер",
-					isImg: false,
-					id: '2',
-					nickName: "Сан Саныч"
-				},
-			];
-
-		let firstLoadMessageWorkChat = 
-			[
-				{
-					date: "08:02", 
-					message: "Опять сервак упал",
-					isImg: false,
-					id: '0',
-					nickName: "Сан Саныч"
-				},
-				{
-					date: "12:56",  
-					message: "Встань и иди",
-					isImg: false,
-					id: '1',
-					nickName: "Владимир"
-				},
-				{
-					date: "20:20", 
-					message: "Ну что поделать",
-					isImg: false,
-					id: '2',
-					nickName: "Владимир"
-				},
-			];
-
-		localStorage.setItem('funChat', JSON.stringify(firstLoadMessageFunChat));
-		localStorage.setItem('workChat', JSON.stringify(firstLoadMessageWorkChat));
-		localStorage.setItem('firstLoad', JSON.stringify(true));
-
-		setIsLoadMessage(true);
-	};
-
 	const renderData = (key, setType ) => {
 		const localHistory = JSON.parse(localStorage.getItem(key));
 		!!localHistory && setType(localHistory);
 	};
 
 	const addMessage = (e) => {
-		setLocalStorage();  
-
 		if (e.shiftKey && e.ctrlKey) {
 			inputMessage.current.value = `${inputMessage.current.value}\n`;
 			return;
 		}
-
+		setLocalStorage();  
 		if (e.key === 'Enter') {
 		 	e.preventDefault();
 			if (!inputMessage.current.value) { return; }
@@ -241,6 +185,43 @@ const Body = () => {
 		closeEditor();
 	};
 
+	const loadBackgroundImage = () => {
+		const input = document.createElement('input');
+		input.type = 'file';
+		
+		input.onchange = e => { 
+			const file = e.target.files[0]; 
+
+			const reader = new FileReader();
+			reader.readAsDataURL(file); 
+
+			reader.onload = readerEvent => {
+				const pathImage = readerEvent.target.result; 
+		
+				if (pathImage.includes('/png')) {
+					localStorage.setItem('BackgroundImage', JSON.stringify(pathImage));
+					localStorage.setItem('isBackgroundImage', JSON.stringify(true));
+
+					mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
+				}
+		  }
+		}
+		input.click();
+	};
+
+	const deleteBackgroundImage = () => {
+		localStorage.setItem('BackgroundImage', JSON.stringify(""));
+		localStorage.setItem('isBackgroundImage', JSON.stringify(false));
+		mainBodyRef.current.style.backgroundImage = 'none';
+	};
+
+	const firstLoadBackgroundMessage = () => {
+		const pathImage = JSON.parse(localStorage.getItem('BackgroundImage'));
+		if (isBackgroundMessage) {
+			mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
+		}
+	}
+
 	const closeEditor = () => {
 		setEditTextState(false);
 		inputMessage.current.value = '';
@@ -249,7 +230,7 @@ const Body = () => {
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
 		checkPoUpSmile(e);
-	}
+	};
 
 	const checkPoUpEditClick = (e) => {
 		if (statePopUpEditMessage && e.target !== popUpEdit) {
@@ -313,78 +294,20 @@ const Body = () => {
 					className="main-body"
 					ref={mainBodyRef}
 				>
-					<div className="wrapper-main-body">
-						{switchСhat && funChatHistory.map((item, key) => (
-							<div 
-								key={key}
-								className="wrapper-message"
-							>
-								<div 
-									className="wrapper-message-text"
-									onClick={(e) => createPopUp(e, item.id)}
-								>
-									<div className="wrapper-nick-message">
-										<div className="wrapper-nick-name">
-											{item.nickName}
-										</div>
-										{!item.isImg &&
-											<span className="text-in-message">
-												{item.message}
-											</span>}
-										{item.isImg && 
-											<img
-											className="wrapper-sticker"
-											src={item.message}
-											alt={"sticler"}
-											/>}
-									</div>
-									<div className="wrapper-time-in-message">
-										<span className="time-in-message">
-											{item.date}
-										</span>
-									</div>
-								</div>
-							</div>
-						))} 
-						{!switchСhat && workChatHistory.map((item, key) =>  (
-							<div 
-								key={key}
-								className="wrapper-message"
-							>
-								<div 
-									className="wrapper-message-text"
-									onClick={(e) => createPopUp(e, item.id)}
-								>
-									<div className="wrapper-nick-message">
-										<div className="wrapper-nick-name">
-											{item.nickName}
-										</div>
-										{!item.isImg &&
-											<span className="text-in-message">
-												{item.message}
-											</span>}
-										{item.isImg && 
-											<img
-											className="wrapper-sticker"
-											src={item.message}
-											alt={"sticler"}
-											/>}
-									</div>
-									<div className="wrapper-time-in-message">
-										<span className="time-in-message">
-											{item.date}
-										</span>
-									</div>
-								</div>
-							</div>
-						))} 
-						</div>
-					</div>
+					<RenderMessage
+						funChatHistory={funChatHistory}
+						workChatHistory={workChatHistory}
+						switchСhat={switchСhat}
+						createPopUp={createPopUp}
+					/>
+				</div>
 				{statePopUpSelectSmile && <PopUpSelectSmile
 					popUpSmile={popUpSmile}
 					addSmile={addSmile}
 				/>}
 				<Footer
+					loadBackgroundImage={loadBackgroundImage}
+					deleteBackgroundImage={deleteBackgroundImage}
 					setLocalStorage={setLocalStorage}
 					addMessage={addMessage}
 					statePopUpSelectSmile={statePopUpSelectSmile}

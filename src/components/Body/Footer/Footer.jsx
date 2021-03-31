@@ -4,6 +4,7 @@ import iconAddFiles from './svg/addFile.svg';
 import iconSmile from './svg/smile.svg';
 import iconEdit from './svg/edit.svg';
 import iconClose from './svg/close.svg'; 
+import iconBackground from './svg/background.svg'; 
 import iconSticker from './svg/sticker/sticker.png'; 
 
 import './Footer.scss';
@@ -17,14 +18,27 @@ const Footer = ({
 	addSticker, 
 	editTextState, 
 	closeEditor,
+	loadBackgroundImage,
+	deleteBackgroundImage,
 }) => (
 	<div className="wrapper-footer">
-		<div className="wrapper-icon-footer">
-			<img 
-				src={iconAddFiles} 
-				className="icon-footer" 
-				alt="iconAddFiles"
-			/>
+			<div className="wrapper-icon-for-backgrond-image">
+				<div className="wrapper-icon-edit-delete">
+					<img 
+					src={iconBackground} 
+					className="icon-footer" 
+					alt="iconAddFiles"
+					onClick={() => loadBackgroundImage()}
+				/>
+				</div>
+				<div className="wrapper-icon-edit-delete">
+					<img 
+						onClick={() => deleteBackgroundImage()}
+						src={iconClose} 
+						className="icon-close" 
+						alt="iconAddFiles"
+					/>
+				</div>
 		</div>
 		<div className="wrapper-text-area-message">
 			<textarea 
