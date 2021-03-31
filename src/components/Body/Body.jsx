@@ -31,7 +31,6 @@ const Body = () => {
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
 
 	const [isSearch, setIsSearch] = useState(false);
-	const [messageFocus, setMessageFocus] = useState(null);
 
 	const [arrayFindMessage, setArrayFindMessage] = useState([]);
 
@@ -279,7 +278,7 @@ const Body = () => {
 	};
 
 	const lengthСheck = () => {
-		if (Number.isInteger(inputMessage.current.value.length / 100)) {
+		if (Number.isInteger(inputMessage.current.value.length / 64)) {
 			inputMessage.current.value = `${inputMessage.current.value}\n`;
 		}
 	};
@@ -296,6 +295,14 @@ const Body = () => {
 			return; 
 		};
 
+		console.log(inputSearch.current.value.length);
+
+		if (inputSearch.current.value.length === 1) {
+			setIsSearch(false);
+		} else {
+			setIsSearch(true);
+		}
+
 		const localHistory = giveLocalHistory();
 
 		setArrayFindMessage([]);
@@ -304,13 +311,13 @@ const Body = () => {
 			if (item.message.includes(inputSearch.current.value)) {
 				let triplePoint = '...';
 
-				if (item.message.length < 40) { 
+				if (item.message.length < 20) { 
 					triplePoint = '';
 				}
 
 				arrayFindMessage.push({
 					date: item.date, 
-					message: `${item.message.substr(0, 40)}${triplePoint}`,
+					message: `${item.message.substr(0, 20)} ${triplePoint}`,
 					isImg: item.isImg,
 					id: item.id,
 					nickName: item.nickName,
@@ -320,11 +327,11 @@ const Body = () => {
 
 		switchСhat && setFoundMessageFunChat(arrayFindMessage);	
 		!switchСhat && setFoundMessageWorkChat(arrayFindMessage);
+
 	};
 	
 	const seeMessage = (id) => {
 		setIsSearch(true);
-		setMessageFocus(id);
 
 		document.getElementById(id).scrollIntoView();
 		document.getElementById(id).classList.add('find-message');
@@ -338,6 +345,9 @@ const Body = () => {
 	const clearSearch = () => {
 		if (isSearch) {
 			setIsSearch(false);
+			setFoundMessageFunChat(null);	
+			setFoundMessageWorkChat(null);	
+			inputSearch.current.value = '';
 		}
 	};
 
@@ -373,7 +383,6 @@ const Body = () => {
 					switchСhat={switchСhat}
 					setIsSearch={setIsSearch}
 					setSwitchChat={setSwitchChat}
-					setIsSearch={setIsSearch}
 					scrollToBottom={scrollToBottom}
 				/>
 				<div 
