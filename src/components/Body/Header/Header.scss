@@ -5,45 +5,45 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
 }
 
 .wrapper-info-chat {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
-  width: 10%;
+  width: 100%;
 }
 
 .text-header { 
   font-size: 1.5vw; 
 }
 
-.wrapper-search-input-icon {
-  height: 100%;
-  width: 30%;
+.icon-chats {
+  font-size: 1.5vw;
+  cursor: pointer;
+}
+
+.header-wrapper-switch-chat {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.wraper-search-icon {
-  display: flex;
+  justify-content: space-around;
   align-items: center;
   height: 100%;
-  margin-right: 20px;
+  width: 30%;
 }
 
-.input-search {
-  width: 75%;
-  height: 80%;
-  border: 2px solid #CEE0F2;
-  background-color: whitesmoke;
-  font-size: 1vw;
+.wrapper-button-clear-storage {
+  width: 20%;
+  height: auto;
+  display: flex;
+  justify-content: center;
 }
 
-.icon-search {
-  height: 80%;
+.active-chat-button {
+  border-bottom: solid 2px #356c8b;
+  color: #356c8b;
 }
+

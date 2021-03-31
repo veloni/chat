@@ -1,47 +1,39 @@
 import React from 'react';
 
+import iconSearch from './svg/search.svg';
+import iconClose from './svg/close.svg';
+
 import './Aside.scss';
 
-const Aside = ({ setSwitchChat, switchСhat, foundMessageFunChat, foundMessageWorkChat, seeMessage, setIsSearch }) => { 
-	const clearStorage = () => {
-		localStorage.clear();
-		window.location.reload();
-	};
-
-	const switchChatToFun = () => {
-		setIsSearch(false);
-		setSwitchChat(true);
-	}
-
-	const switchChatToFWork = () => {
-		setIsSearch(false);
-		setSwitchChat(false);
-	}
+const Aside = ({
+	inputSearch, 
+	searchMessage, 
+	isSearch, 
+	endSearch, 
+	switchСhat, 
+	foundMessageFunChat, 
+	foundMessageWorkChat, 
+	seeMessage 
+}) => { 
 
 	return (
     <div className="wrapper-aside"> 
-			<div className="header-aside">
-				<span 
-					className={`icon-chats ${!switchСhat ? 'active-chat-button' : '' }`}
-					onClick={() => switchChatToFWork()}
-				>
-					Рабочий чат
-				</span>
-				<span 
-					className={`icon-chats ${switchСhat ? 'active-chat-button' : '' }`}
-					onClick={() => switchChatToFun()}
-				>
-					Флудильня
-				</span>
-			</div>
-			<div className="wrapper-button-clear-storage">
-				<button 
-					className="button-clear-storage"
-					onClick={() => clearStorage()}
-				>
-					ClearStorage
-				</button>
-			</div>
+			<div className="wrapper-search-input-icon">
+					<input
+						defaultValue="Клим"
+						className="input-search"
+						ref={inputSearch}
+						onChange={(e) => searchMessage(e)}
+					/>
+					<div className="wraper-search-icon">
+						<img 
+							src={isSearch ? iconClose : iconSearch} 
+							className="icon-search" 
+							alt="iconSearch"
+							onClick={() => endSearch()}
+						/>
+					</div>
+				</div>
 			<div className="wrapper-find-message">
 				{switchСhat && 
 				!!foundMessageFunChat && 

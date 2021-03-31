@@ -2,33 +2,56 @@ import React from 'react';
 
 import './Header.scss';
 
-import iconSearch from './svg/search.svg';
-import iconClose from './svg/close.svg';
+const Header = ({ 
+	setSwitchChat, 
+	setIsSearch, 
+	switchСhat,
+}) => {
 
-const Header = ({ searchMessage, inputSearch, isSearch, endSearch}) => (
+	const clearStorage = () => {
+		localStorage.clear();
+		window.location.reload();
+	};
+
+	const switchChatToFun = () => {
+		setIsSearch(false);
+		setSwitchChat(true);
+	}
+
+	const switchChatToFWork = () => {
+		setIsSearch(false);
+		setSwitchChat(false);
+	}
+	
+	return ( 
 	<div className="wrapper-header">
 		<div className="wrapper-info-chat">
-			<span className="text-header">
-				online
-			</span>
-		</div>
-		<div className="wrapper-search-input-icon">
-			<input
-				defaultValue="Клим"
-				className="input-search"
-				ref={inputSearch}
-				onChange={(e) => searchMessage(e)}
-			/>
-			<div className="wraper-search-icon">
-				<img 
-					src={isSearch ? iconClose : iconSearch} 
-					className="icon-search" 
-					alt="iconSearch"
-					onClick={() => endSearch()}
-				/>
+			<div className="header-wrapper-switch-chat">
+					<span 
+						className={`icon-chats ${!switchСhat ? 'active-chat-button' : '' }`}
+						onClick={() => switchChatToFWork()}
+					>
+						Рабочий чат
+					</span>
+					<span 
+						className={`icon-chats ${switchСhat ? 'active-chat-button' : '' }`}
+						onClick={() => switchChatToFun()}
+					>
+						Флудильня
+					</span>
+				</div>
+			<div className="wrapper-button-clear-storage">
+				<button 
+					className="button-clear-storage"
+					onClick={() => clearStorage()}
+				>
+					ClearStorage
+				</button>
 			</div>
 		</div>
 	</div>
-);
+	);
+};
+
 
 export default Header;

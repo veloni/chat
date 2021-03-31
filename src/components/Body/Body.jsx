@@ -280,6 +280,7 @@ const Body = () => {
 		
 		if (!inputSearch.current.value) { 
 			setFoundMessageFunChat(null);	
+			setFoundMessageWorkChat(null);	
 			return; 
 		} 
 
@@ -292,7 +293,7 @@ const Body = () => {
 						
 				arrayFindMessage.push({
 					date: item.date, 
-					message: item.message,
+					message: `${item.message.substr(0, 20)}...`,
 					isImg: item.isImg,
 					id: item.id,
 					nickName: item.nickName,
@@ -337,18 +338,19 @@ const Body = () => {
 			<Aside
 				foundMessageFunChat={foundMessageFunChat}
 				foundMessageWorkChat={foundMessageWorkChat}
-				setSwitchChat={setSwitchChat}
 				switchСhat={switchСhat}
 				seeMessage={seeMessage}
-				setIsSearch={setIsSearch}
+				inputSearch={inputSearch}
+				isSearch={isSearch}
+				endSearch={endSearch}
+				searchMessage={searchMessage}
 			/>
 			<div className="wrapper-header-body">
 				<Header
-				  isSearch={isSearch}
+					switchСhat={switchСhat}
 					setIsSearch={setIsSearch}
-					inputSearch={inputSearch}
-					searchMessage={searchMessage}
-					endSearch={endSearch}
+					setSwitchChat={setSwitchChat}
+					setIsSearch={setIsSearch}
 				/>
 				<div 
 					className="main-body"
