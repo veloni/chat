@@ -27,9 +27,13 @@ const Body = () => {
 
 	const [funChatHistory, setFunChatHistory] = useState([]);
 	const [workChatHistory, setWorkChatHistory] = useState([]);
-	const [foundMessage, setFoundMessage] = useState([]);
-	const [arrayMassiveIdFoundMessage, setArrayMassiveIdFoundMessage] = useState([]);
-	const [checkFindId, setCheckFindId] = useState(false);
+	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
+	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
+
+	const [isSearch, setIsSearch] = useState(false);
+	const [messageFocus, setMessageFocus] = useState(null);
+
+	const [arrayFindMessage, setArrayFindMessage] = useState([]);
 
 	const mainBodyRef = useRef(null);
 	const inputMessage = useRef(null);
@@ -273,54 +277,45 @@ const Body = () => {
 	}
 
 	const searchMessage = (e) => {
-		if (e.key === 'Enter') {
-			let localHistory = giveLocalHistory();
+		
+		if (!inputSearch.current.value) { 
+			setFoundMessageFunChat(null);	
+			return; 
+		} 
 
-			localHistory.forEach((item, index) => {
-				if (item.message.includes(inputSearch.current.value)) {
-					setCheckFindId(false);
-					arrayMassiveIdFoundMessage.forEach((element) => {
-						if (element === item.id)  {
-							setCheckFindId(true);
-						} 
-					});
+		const localHistory = giveLocalHistory();
 
-					arrayMassiveIdFoundMessage.push(item.id);
+		setArrayFindMessage([]);
+		
+		localHistory.forEach((item, index) => {
+			if (item.message.includes(inputSearch.current.value)) {
+						
+				arrayFindMessage.push({
+					date: item.date, 
+					message: item.message,
+					isImg: item.isImg,
+					id: item.id,
+					nickName: item.nickName,
+				},);
+			}
+		});
 
-					!checkFindId && 
-					setFoundMessage([
-						...foundMessage, 
-						{
-							date: item.date, 
-							message: item.message,
-							isImg: item.isImg,
-							id: item.id,
-							nickName: item.nickName,
-						},
-					]);
-					
-				}
-			});
-		}
-
-		arrayMassiveIdFoundMessage.forEach((item) => {
-			console.log(item); 
-		}); 
-
-	 	foundMessage.forEach((item) => {
-			console.log(item.message); 
-		}); 
+		switchСhat && setFoundMessageFunChat(arrayFindMessage);	
+		!switchСhat && setFoundMessageWorkChat(arrayFindMessage);
 	};
-
-	const createRefFunction = (id) => {
-/* 		id = createRef();
-		console.log(id);
-		return id; */
- }
-
+	
 	const seeMessage = (id) => {
+		setIsSearch(true);
+		setMessageFocus(id);
 		document.getElementById(id).scrollIntoView();
-		document.getElementById(id).style.backgroundColor = "#CEE0F2";
+		document.getElementById(id).style.backgroundColor = '#CEE0F2';
+	}
+
+	const endSearch = () => {
+		if (isSearch) {
+			setIsSearch(false);
+			document.getElementById(messageFocus).style.backgroundColor = 'whitesmoke';
+		}
 	}
 
 	const setLocalAndRenderForAllChat = (localHistory) => {
@@ -340,15 +335,20 @@ const Body = () => {
 				editMessage={editMessage}
 			/>}
 			<Aside
-				foundMessage={foundMessage}
+				foundMessageFunChat={foundMessageFunChat}
+				foundMessageWorkChat={foundMessageWorkChat}
 				setSwitchChat={setSwitchChat}
 				switchСhat={switchСhat}
 				seeMessage={seeMessage}
+				setIsSearch={setIsSearch}
 			/>
 			<div className="wrapper-header-body">
 				<Header
+				  isSearch={isSearch}
+					setIsSearch={setIsSearch}
 					inputSearch={inputSearch}
 					searchMessage={searchMessage}
+					endSearch={endSearch}
 				/>
 				<div 
 					className="main-body"
@@ -359,7 +359,6 @@ const Body = () => {
 						workChatHistory={workChatHistory}
 						switchСhat={switchСhat}
 						createPopUp={createPopUp}
-						createRefFunction={createRefFunction}
 					/>
 				</div>
 				{statePopUpSelectSmile && <PopUpSelectSmile

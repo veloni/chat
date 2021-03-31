@@ -24,6 +24,13 @@ const loadMessageFirstEntreance = (isLoadMessage, setIsLoadMessage) => {
       id: '2',
       nickName: "Сан Саныч",
     },
+    {
+      date: "20:20", 
+      message: "Клим Климыч добрый вечер 2",
+      isImg: false,
+      id: '3',
+      nickName: "Сан Саныч",
+    },
   ];
 
   const firstLoadMessageWorkChat = [
@@ -48,6 +55,7 @@ const loadMessageFirstEntreance = (isLoadMessage, setIsLoadMessage) => {
         id: '2',
         nickName: "Владимир",
       },
+      
     ];
 
   localStorage.setItem('funChat', JSON.stringify(firstLoadMessageFunChat));

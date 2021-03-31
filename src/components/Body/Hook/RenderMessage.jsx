@@ -5,7 +5,6 @@ const RenderMessage = ({
 	funChatHistory,
 	createPopUp,
 	switchСhat,
-	createRefFunction,
 }) => {
 		
 	return (
@@ -14,7 +13,6 @@ const RenderMessage = ({
 				<div 
 					key={key}
 					className="wrapper-message"
-					ref={createRefFunction(item.id)}
 				>
 					<div 
 						id={item.id} 
@@ -51,6 +49,7 @@ const RenderMessage = ({
 				>
 					<div 
 						className="wrapper-message-text"
+						id={item.id} 
 						onClick={(e) => createPopUp(e, item.id)}
 					>
 						<div className="wrapper-nick-message">
