@@ -80,4 +80,5 @@ const Aside = ({
 		</div>
 	);
 };
+
 export default Aside;

@@ -1,7 +1,6 @@
-import React from 'react';
-
 const loadMessageFirstEntreance = (isLoadMessage, setIsLoadMessage) => {
   if (isLoadMessage) { return; }
+  
   const firstLoadMessageFunChat = [
     {
       date: "12:02", 

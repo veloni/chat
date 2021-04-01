@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import './Header.scss';
 
@@ -18,13 +18,13 @@ const Header = ({
 		setIsSearch(false);
 		setSwitchChat(true);
 		scrollToBottom();
-	}
+	};
 
 	const switchChatToFWork = () => {
 		setIsSearch(false);
 		setSwitchChat(false);
 		scrollToBottom();
-	}
+	};
 	
 	return ( 
 	<div className="wrapper-header">

@@ -6,7 +6,9 @@ import Aside from './Aside/Aside';
 import PopUpEditMessage from './PopUpEditMessage/PopUpEditMessage';
 import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
 import RenderMessage from './Hook/RenderMessage';
+
 import loadMessageFirstEntreance from './Hook/loadMessageFirstEntreance';
+/* import messageHook from './Hook/messageHook'; */
 
 import sticker from './sticker/sticker.png';
 
@@ -14,7 +16,7 @@ import './Body.scss';
 
 const Body = () => {
 	const [isLoadMessage, setIsLoadMessage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
-	const [isBackgroundMessage, setIsBackgroundMessage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
+	const isBackgroundMessage = (JSON.parse(localStorage.getItem('firstLoad')));
 
 	const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
@@ -38,7 +40,11 @@ const Body = () => {
 	const inputMessage = useRef(null);
 	const popUpEdit = useRef(null);
 	const popUpSmile = useRef(null);
-	const inputSearch = useRef(null);
+	const inputSearch = useRef(null); 
+	
+	useEffect(() => {
+		setIsLoadMessage()
+	}, []);
 
 	useEffect(() => {
 		scrollToBottom();
@@ -46,11 +52,11 @@ const Body = () => {
 
 	useEffect(() => {
 		loadMessageFirstEntreance(isLoadMessage, setIsLoadMessage);
-	}, []);
+	}, [isLoadMessage]);
 
 	useEffect(() => {
 		firstLoadBackgroundMessage();
-	}, []);
+	});
 
 	useEffect(() => {
  		renderData('workChat', setWorkChatHistory);
@@ -151,7 +157,7 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 
-		localHistory.map((item, index) => {
+		localHistory.map.function((item, index) => {
 			if (item.id === whatClick) {
 				localHistory.splice(index, 1);
 				return;
@@ -164,13 +170,13 @@ const Body = () => {
 	const editMessage = () => {
 		setLocalStorage();
 		setEditTextState(true);
-		 setStatePopUpEditMessage(false); 
+		setStatePopUpEditMessage(false); 
 
 		let localHistory;
 
 		localHistory = giveLocalHistory();
 	
-		localHistory.map((item) => {
+		localHistory.map.function((item) => {
 			if (item.isImg === true) { 
 				return;
 			}
@@ -186,7 +192,7 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 
-		localHistory.map((item) => {
+		localHistory.map.function((item) => {
 			if (item.id === whatClick) {
 				item.message = inputMessage.current.value;
 			}
@@ -261,7 +267,7 @@ const Body = () => {
 
 	const scrollToBottom = () => {
 		setTimeout(() => {
-			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
+			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight,);
 		}, 1);
 	};
 	
@@ -327,7 +333,6 @@ const Body = () => {
 
 		switchСhat && setFoundMessageFunChat(arrayFindMessage);	
 		!switchСhat && setFoundMessageWorkChat(arrayFindMessage);
-
 	};
 	
 	const seeMessage = (id) => {
@@ -339,7 +344,6 @@ const Body = () => {
 		setTimeout(() => {
 			document.getElementById(id).classList.remove('find-message');
 		}, 2000);
-
 	};
 
 	const clearSearch = () => {

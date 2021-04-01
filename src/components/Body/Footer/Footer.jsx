@@ -1,6 +1,5 @@
 import React from 'react';
 
-import iconAddFiles from './svg/addFile.svg';
 import iconSmile from './svg/smile.svg';
 import iconEdit from './svg/edit.svg';
 import iconClose from './svg/close.svg'; 

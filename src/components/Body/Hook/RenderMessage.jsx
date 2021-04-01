@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 const RenderMessage = ({ 
 	workChatHistory,
@@ -78,4 +78,5 @@ const RenderMessage = ({
 		</div>
 	);
 };
+
 export default RenderMessage;

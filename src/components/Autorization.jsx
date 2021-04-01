@@ -14,7 +14,7 @@ const Autorization = ({ autorizaton, setAutorizaton }) => {
 		if (localLogin !== loginValue && localPassword !== passwordValue) { return; };
 
 		setAutorizaton(true);
- 	}, []);
+ 	});
 
   const checkLoginPass = () => {
 		const isLoginCorrect = loginValue === 'admin';
