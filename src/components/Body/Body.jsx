@@ -7,23 +7,23 @@ import PopUpEditMessage from './PopUpEditMessage/PopUpEditMessage';
 import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
 import RenderMessage from './RenderMessage/RenderMessage';
 
-import loadMessageFirstEntreance from './loadMessageFirstEntreance/loadMessageFirstEntreance';
-/* import messageHook from './Hook/messageHook'; */
+import useLoadMessageFirstEntreance from '../../hooks/useLoadMessageFirstEntreance';
 
 import sticker from './sticker/sticker.png';
 
 import './Body.scss';
 
 const Body = () => {
-	const [isLoadMessage, setIsLoadMessage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
-	const isBackgroundMessage = (JSON.parse(localStorage.getItem('firstLoad')));
+	const [isFirstLocalStorage, setFirstLocalStorage] = useLoadMessageFirstEntreance();
+
+	const isBackgroundMessage = JSON.parse(localStorage.getItem('firstLoad'));
 
 	const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
-
 	const [statePopUpEditMessage, setStatePopUpEditMessage] = useState(false);
+
 	const [statePopUpSelectSmile, setStatePopUpSelectSmile] = useState(false);
-	const [switchСhat , setSwitchChat] = useState(true);
+	const [switchСhat, setSwitchChat] = useState(true);
 	const [whatClick, setWhatClick] = useState(null);
 	const [editTextState, setEditTextState] = useState(false);
 
@@ -31,9 +31,7 @@ const Body = () => {
 	const [workChatHistory, setWorkChatHistory] = useState([]);
 	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
-
 	const [isSearch, setIsSearch] = useState(false);
-
 	const [arrayFindMessage, setArrayFindMessage] = useState([]);
 
 	const mainBodyRef = useRef(null);
@@ -43,16 +41,12 @@ const Body = () => {
 	const inputSearch = useRef(null); 
 	
 	useEffect(() => {
-		setIsLoadMessage()
-	}, []);
+		!isFirstLocalStorage && setFirstLocalStorage();
+	});
 
 	useEffect(() => {
 		scrollToBottom();
 	}, []);
-
-	useEffect(() => {
-		loadMessageFirstEntreance(isLoadMessage, setIsLoadMessage);
-	}, [isLoadMessage]);
 
 	useEffect(() => {
 		firstLoadBackgroundMessage();
@@ -165,7 +159,6 @@ const Body = () => {
 		});
 
 		setLocalAndRenderForAllChat(localHistory);
-
 	};
 
 	const editMessage = () => {
@@ -179,6 +172,7 @@ const Body = () => {
 
 		localHistory.forEach(function(item) {
 			if (item.isImg === true) { 
+				setEditTextState(false);
 				return;
 			}
 
@@ -281,7 +275,6 @@ const Body = () => {
 		if (switchСhat) {
 			return (JSON.parse(localStorage.getItem('funChat')));
 		} 
-		console.log(2);
 		return (JSON.parse(localStorage.getItem('workChat')));
 	};
 
@@ -302,8 +295,6 @@ const Body = () => {
 			setFoundMessageWorkChat(null);	
 			return; 
 		};
-
-		console.log(inputSearch.current.value.length);
 
 		if (inputSearch.current.value.length === 1) {
 			setIsSearch(false);

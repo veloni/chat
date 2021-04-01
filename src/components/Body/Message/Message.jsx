@@ -4,11 +4,9 @@ import './Message.scss';
 
 const Message = ({
   item,
-  key,
   createPopUp,
  }) => (
   <div 
-    key={key}
     className="wrapper-message"
   >
     <div 
