@@ -7,7 +7,10 @@ import PopUpEditMessage from './PopUpEditMessage/PopUpEditMessage';
 import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
 import RenderMessage from './RenderMessage/RenderMessage';
 
+import useMessagePopUp from '../../hooks/useMessagePopUp';
 import useLoadMessageFirstEntreance from '../../hooks/useLoadMessageFirstEntreance';
+import useSwitchChat from '../../hooks/useSwitchChat';
+import useFunWorkChat from '../../hooks/useFunWorkChat';
 
 import sticker from './sticker/sticker.png';
 
@@ -15,27 +18,45 @@ import './Body.scss';
 
 const Body = () => {
 	const [isFirstLocalStorage, setFirstLocalStorage] = useLoadMessageFirstEntreance();
+	
+	const [
+		funChatHistory,
+    workChatHistory,
+    setFunChatHistory,
+    setWorkChatHistory,
+		inputMessage,
+	] = useFunWorkChat();
+
+	const [
+		switchСhat,
+    setSwitchChat,
+    switchChatToFun,
+    switchChatToFWork,
+	] = useSwitchChat();
+
+	const [
+		mousePositionX, 
+    mousePositionY,
+    whatClick,
+    createPopUp,
+    statePopUpEditMessage,
+    setStatePopUpEditMessage,
+    deleteMessage,
+    closeEditor,
+    editMessage,
+    editTextState,
+  ] = useMessagePopUp({switchСhat, setFunChatHistory, setWorkChatHistory, inputMessage, funChatHistory, workChatHistory});
 
 	const isBackgroundMessage = JSON.parse(localStorage.getItem('firstLoad'));
 
-	const [mousePositionX, setMousePositionX] = useState(null);
-	const [mousePositionY, setMousePositionY] = useState(null);
-	const [statePopUpEditMessage, setStatePopUpEditMessage] = useState(false);
-
 	const [statePopUpSelectSmile, setStatePopUpSelectSmile] = useState(false);
-	const [switchСhat, setSwitchChat] = useState(true);
-	const [whatClick, setWhatClick] = useState(null);
-	const [editTextState, setEditTextState] = useState(false);
-
-	const [funChatHistory, setFunChatHistory] = useState([]);
-	const [workChatHistory, setWorkChatHistory] = useState([]);
+	
 	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
 	const [isSearch, setIsSearch] = useState(false);
 	const [arrayFindMessage, setArrayFindMessage] = useState([]);
 
 	const mainBodyRef = useRef(null);
-	const inputMessage = useRef(null);
 	const popUpEdit = useRef(null);
 	const popUpSmile = useRef(null);
 	const inputSearch = useRef(null); 
@@ -76,10 +97,10 @@ const Body = () => {
 		 	e.preventDefault();
 			if (!inputMessage.current.value) { return; }
 
-			if (editTextState) { 
+		/* 	if (editTextState) { 
 				editerMessage();
 				return;
-			}
+			} */
 	
 			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
 			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
@@ -135,33 +156,7 @@ const Body = () => {
 		return (`${hour}:${min}`);
 	};
 
-	const createPopUp = (e, id) => {
-		setWhatClick(id);
-
-		setMousePositionX(`${e.nativeEvent.pageX}px`);
-		setMousePositionY(`${e.nativeEvent.pageY}px`);
-
-		setStatePopUpEditMessage(true);
-	};
-
-	const deleteMessage = () => {
-	 	setStatePopUpEditMessage(false); 
-
-		let localHistory;
-
-		localHistory = giveLocalHistory();
-
-		localHistory.forEach(function(item, index) {
-			if (item.id === whatClick) {
-				localHistory.splice(index, 1);
-				return;
-			}
-		});
-
-		setLocalAndRenderForAllChat(localHistory);
-	};
-
-	const editMessage = () => {
+/* 	const editMessage = () => {
 		setLocalStorage();
 		setEditTextState(true);
 		setStatePopUpEditMessage(false); 
@@ -180,7 +175,7 @@ const Body = () => {
 				inputMessage.current.value = item.message;
 			}
 		});
-	};
+	}; */
 
 	const editerMessage = () => {
 		let localHistory;
@@ -235,11 +230,6 @@ const Body = () => {
 		}
 	};
 
-	const closeEditor = () => {
-		setEditTextState(false);
-		inputMessage.current.value = '';
-	};
-
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
 		statePopUpSelectSmile && checkPoUpSmile(e);
@@ -262,7 +252,7 @@ const Body = () => {
 
 	const scrollToBottom = () => {
 		setTimeout(() => {
-			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight,);
+			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
 		}, 1);
 	};
 	
@@ -381,6 +371,8 @@ const Body = () => {
 					setIsSearch={setIsSearch}
 					setSwitchChat={setSwitchChat}
 					scrollToBottom={scrollToBottom}
+					switchChatToFun={switchChatToFun}
+					switchChatToFWork={switchChatToFWork}
 				/>
 				<div 
 					className="main-body"

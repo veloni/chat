@@ -1,7 +1,5 @@
-import { useState } from 'react';
-
 const useLoadMessageFirstEntreance = () => {
-  const [isFirstLocalStorage, setIsFirstLocalStorage] = useState(JSON.parse(localStorage.getItem('firstLoad')));
+  const isFirstLocalStorage = JSON.parse(localStorage.getItem('firstLoad'));
 
   const setFirstLocalStorage = () => {
     localStorage.setItem('funChat', JSON.stringify(firstLoadMessageFunChat));

@@ -7,6 +7,8 @@ const Header = ({
 	setIsSearch, 
 	switchСhat,
 	scrollToBottom,
+	switchChatToFun,
+	switchChatToFWork,
 }) => {
 	
 	const clearStorage = () => {
@@ -14,18 +16,6 @@ const Header = ({
 		window.location.reload();
 	};
 
-	const switchChatToFun = () => {
-		setIsSearch(false);
-		setSwitchChat(true);
-		scrollToBottom();
-	};
-
-	const switchChatToFWork = () => {
-		setIsSearch(false);
-		setSwitchChat(false);
-		scrollToBottom();
-	};
-	
 	return ( 
 	<div className="wrapper-header">
 		<div className="wrapper-info-chat">
