@@ -5,9 +5,9 @@ import Footer from './Footer/Footer';
 import Aside from './Aside/Aside';
 import PopUpEditMessage from './PopUpEditMessage/PopUpEditMessage';
 import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
-import RenderMessage from './Hook/RenderMessage';
+import RenderMessage from './RenderMessage/RenderMessage';
 
-import loadMessageFirstEntreance from './Hook/loadMessageFirstEntreance';
+import loadMessageFirstEntreance from './loadMessageFirstEntreance/loadMessageFirstEntreance';
 /* import messageHook from './Hook/messageHook'; */
 
 import sticker from './sticker/sticker.png';
