@@ -1,20 +1,27 @@
 import { useState, useRef } from 'react';
 
-const useSearch = ({ switchСhat, inputMessage, setIsSearch, isSearch }) => {
+import { getDataFromLocalStorage } from './helper';
+
+const useSearch = ({ 
+	switchСhat, 
+	inputMessage, 
+	setIsSearch, 
+	isSearch 
+}) => {
 	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
 	const [arrayFindMessage, setArrayFindMessage] = useState([]);
 
-	const inputSearch = useRef(null); 
-	
+	const inputSearchRef = useRef(null); 
+
 	const searchMessage = () => {
-		if (!inputSearch.current.value) { 
+		if (!inputSearchRef.current.value) { 
 			setFoundMessageFunChat(null);	
 			setFoundMessageWorkChat(null);	
 			return; 
 		};
 
-		if (inputSearch.current.value.length === 1) {
+		if (inputSearchRef.current.value.length === 1) {
 			setIsSearch(false);
 		} else {
 			setIsSearch(true);
@@ -24,9 +31,11 @@ const useSearch = ({ switchСhat, inputMessage, setIsSearch, isSearch }) => {
 
 		setArrayFindMessage([]);
 
-		localHistory.forEach((item,) => {
-			if (item.message.includes(inputSearch.current.value)) {
+		localHistory.forEach((item) => {
+			if (item.message.includes(inputSearchRef.current.value)) {
 				let triplePoint = '...';
+
+				if (item.isImg === true) { return; }
 
 				if (item.message.length < 20) { 
 					triplePoint = '';
@@ -62,15 +71,15 @@ const useSearch = ({ switchСhat, inputMessage, setIsSearch, isSearch }) => {
 			setIsSearch(false);
 			setFoundMessageFunChat(null);	
 			setFoundMessageWorkChat(null);	
-			inputSearch.current.value = '';
+			inputSearchRef.current.value = '';
 		}
 	};
 
 	const giveLocalHistory = () => {
 		if (switchСhat) {
-			return (JSON.parse(localStorage.getItem('funChat')));
+			return (getDataFromLocalStorage('funChat'));
 		} 
-		return (JSON.parse(localStorage.getItem('workChat')));
+		return (getDataFromLocalStorage('workChat'));
 	};
 	
 	const lengthСheck = () => {
@@ -82,12 +91,12 @@ const useSearch = ({ switchСhat, inputMessage, setIsSearch, isSearch }) => {
 	return [
 		foundMessageFunChat,
 		foundMessageWorkChat,
+		inputSearchRef,
 		clearSearch,
 		searchMessage,
-		inputSearch,
 		seeMessage,
 		lengthСheck,
-  ]
-}
+  ];
+};
 
-export default useSearch
+export default useSearch;

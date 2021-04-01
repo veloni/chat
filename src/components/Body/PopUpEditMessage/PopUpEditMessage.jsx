@@ -7,11 +7,11 @@ const PopUpEditMessage = ({
 	mousePositionY, 
 	deleteMessage, 
 	editMessage,
-	popUpEdit,
+	popUpEditRef,
 }) => (
 	<div
 		className="wrapper-pop-up"
-		ref={popUpEdit}
+		ref={popUpEditRef}
 		style={{ 
 			top: `${parseInt(mousePositionY) - 100}px`, 
 			left: mousePositionX, 

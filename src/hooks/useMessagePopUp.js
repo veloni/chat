@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react';
 
+import { getDataFromLocalStorage } from './helper';
+
 const useMessagePopUp = ({
   switchСhat, 
   setFunChatHistory, 
@@ -14,7 +16,7 @@ const useMessagePopUp = ({
   const [whatClick, setWhatClick] = useState(null);
   const [editTextState, setEditTextState] = useState(false); 
 
-	const popUpEdit = useRef(null);
+	const popUpEditRef = useRef(null);
 
 	const createPopUp = (e, id) => {
 		setWhatClick(id);
@@ -39,98 +41,97 @@ const useMessagePopUp = ({
      }
    });
 
-   console.log(setFunChatHistory);
    setLocalAndRenderForAllChat(localHistory);
  };
 
- const closeEditor = () => {
-  setEditTextState(false);
-  inputMessage.current.value = '';
-};
+  const closeEditor = () => {
+    setEditTextState(false);
+    inputMessage.current.value = '';
+  };
 
- const editMessage = () => {
-  setLocalStorage();
-  setEditTextState(true);
-  setStatePopUpEditMessage(false); 
+  const editMessage = () => {
+    setLocalStorage();
+    setEditTextState(true);
+    setStatePopUpEditMessage(false); 
 
-  let localHistory;
+    let localHistory;
 
-  localHistory = giveLocalHistory();
+    localHistory = giveLocalHistory();
 
-  localHistory.forEach(function(item) {
-    if (item.isImg === true) { 
-      setEditTextState(false);
-      return;
+    localHistory.forEach(function(item) {
+      if (item.isImg === true) { 
+        setEditTextState(false);
+        return;
+      }
+
+      if (item.id === whatClick) {
+        inputMessage.current.value = item.message;
+      }
+    });
+  };
+
+  const editerMessage = () => {
+    let localHistory;
+
+    localHistory = giveLocalHistory();
+
+    localHistory.forEach(function(item) {
+      if (item.id === whatClick) {
+        item.message = inputMessage.current.value;
+      }
+    });
+
+    setLocalAndRenderForAllChat(localHistory);
+
+    closeEditor();
+  };
+
+  const checkPoUpEditClick = (e) => {
+    if (statePopUpEditMessage && e.target !== popUpEditRef) {
+      setStatePopUpEditMessage(false); 
     }
+  };
 
-    if (item.id === whatClick) {
-      inputMessage.current.value = item.message;
-    }
-  });
-};
+  const setLocalStorage = () => {
+    switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
+    !switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
+  };
 
-const editerMessage = () => {
-  let localHistory;
+  const setLocalAndRenderForAllChat = (localHistory) => {
+    switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
+    !switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
+  };
 
-  localHistory = giveLocalHistory();
+  const setLocalAndRender = (typeChat, setTypeChat, localHistory) => {
+    localStorage.setItem(typeChat, JSON.stringify(localHistory));  
+    renderData(typeChat, setTypeChat);
+  };
 
-  localHistory.forEach(function(item) {
-    if (item.id === whatClick) {
-      item.message = inputMessage.current.value;
-    }
-  });
-  
-  setLocalAndRenderForAllChat(localHistory);
-  
-  closeEditor();
-};
+  const giveLocalHistory = () => {
+    if (switchСhat) {
+      return (getDataFromLocalStorage('funChat'));
+    } 
+    return (getDataFromLocalStorage('workChat'));
+  };
 
-const checkPoUpEditClick = (e) => {
-  if (statePopUpEditMessage && e.target !== popUpEdit) {
-     setStatePopUpEditMessage(false); 
-  }
-};
-
-const setLocalStorage = () => {
-  switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
-  !switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
-};
-
- const setLocalAndRenderForAllChat = (localHistory) => {
-  switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
-  !switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
-} ;
-
-const setLocalAndRender = (typeChat, setTypeChat, localHistory) => {
-  localStorage.setItem(typeChat, JSON.stringify(localHistory));  
-  renderData(typeChat, setTypeChat);
-};
-
- const giveLocalHistory = () => {
-  if (switchСhat) {
-    return (JSON.parse(localStorage.getItem('funChat')));
-  } 
-  return (JSON.parse(localStorage.getItem('workChat')));
-};
-
-const renderData = (key, setType ) => {
-  const localHistory = JSON.parse(localStorage.getItem(key));
-  !!localHistory && setType(localHistory);
-};
+  const renderData = (key, setType ) => {
+    const localHistory = JSON.parse(localStorage.getItem(key));
+    !!localHistory && setType(localHistory);
+  };
 
   return [
     mousePositionX, 
     mousePositionY,
+    editTextState,
+    popUpEditRef,
     createPopUp,
     statePopUpEditMessage,
     deleteMessage,
     closeEditor,
     editMessage,
-    editTextState,
     editerMessage,
     checkPoUpEditClick,
-    popUpEdit,
-  ]
-}
+  ];
+};
 
-export default useMessagePopUp
+export default useMessagePopUp;

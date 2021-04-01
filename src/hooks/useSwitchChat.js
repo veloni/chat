@@ -1,17 +1,19 @@
 import { useState } from 'react';
 
-const useSwitchChat = ( scrollToBottom ) => {
+const useSwitchChat = ({ scrollToBottom }) => {
   const [switchСhat, setSwitchChat] = useState(true);
   const [isSearch, setIsSearch] = useState(false);
 
   const switchChatToFun = () => {
  		setIsSearch(false); 
 		setSwitchChat(true);
+    scrollToBottom();
 	};
 
 	const switchChatToFWork = () => {
  		setIsSearch(false); 
 		setSwitchChat(false);
+    scrollToBottom();
 	};
 
   return [
@@ -21,7 +23,7 @@ const useSwitchChat = ( scrollToBottom ) => {
     switchChatToFWork,
     setIsSearch,
     isSearch,
-  ]
-}
+  ];
+};
 
-export default useSwitchChat
+export default useSwitchChat;

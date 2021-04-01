@@ -1,5 +1,7 @@
 import sticker from '../sticker/sticker.png';
 
+import { setDataFromLocalStorage } from './helper';
+
 const useMessage = ({ 
 	inputMessage,
 		switchСhat,
@@ -77,21 +79,21 @@ const useMessage = ({
 
  		if (min < 10) { 
 			min = `0${min}`;
-		}; 
+		}
 
 		return (`${hour}:${min}`);
 	};
 
   const setLocalStorage = () => {
-		switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
-		!switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
+		switchСhat && setDataFromLocalStorage('funChat', funChatHistory);  
+		!switchСhat && setDataFromLocalStorage('workChat', workChatHistory);
 	};
 
   return [
     setLocalStorage,
     addMessage,
     addSticker,
-  ]
-}
+  ];
+};
 
-export default useMessage
+export default useMessage;

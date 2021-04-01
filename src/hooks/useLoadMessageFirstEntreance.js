@@ -1,10 +1,18 @@
+import { setDataFromLocalStorage } from './helper';
+
+import { useEffect } from 'react';
+
 const useLoadMessageFirstEntreance = () => {
+	useEffect(() => {
+		!isFirstLocalStorage && setFirstLocalStorage();
+	});
+
   const isFirstLocalStorage = JSON.parse(localStorage.getItem('firstLoad'));
 
   const setFirstLocalStorage = () => {
-    localStorage.setItem('funChat', JSON.stringify(firstLoadMessageFunChat));
-    localStorage.setItem('workChat', JSON.stringify(firstLoadMessageWorkChat));
-    localStorage.setItem('firstLoad', JSON.stringify(true));
+    setDataFromLocalStorage('funChat', firstLoadMessageFunChat);
+    setDataFromLocalStorage('workChat', firstLoadMessageWorkChat);
+    setDataFromLocalStorage('firstLoad', true);
   };
 
   const firstLoadMessageFunChat = [
@@ -56,7 +64,7 @@ const useLoadMessageFirstEntreance = () => {
   ];
 
   return [isFirstLocalStorage, setFirstLocalStorage];
-}
+};
 
-export default useLoadMessageFirstEntreance
+export default useLoadMessageFirstEntreance;
 

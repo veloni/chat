@@ -6,7 +6,7 @@ import iconClose from './svg/close.svg';
 import './Aside.scss';
 
 const Aside = ({
-	inputSearch, 
+	inputSearchRef, 
 	searchMessage, 
 	isSearch, 
 	clearSearch, 
@@ -21,7 +21,7 @@ const Aside = ({
 			<div className="wrapper-search-input-icon">
 					<input
 						className="input-search"
-						ref={inputSearch}
+						ref={inputSearchRef}
 						onChange={(e) => searchMessage(e)}
 					/>
 					<div className="wraper-search-icon">

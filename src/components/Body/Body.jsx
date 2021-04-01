@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -20,18 +20,15 @@ import useScroll from '../../hooks/useScroll';
 import './Body.scss';
 
 const Body = () => {
-	const [
-		isFirstLocalStorage,
-		setFirstLocalStorage
-	] = useLoadMessageFirstEntreance();
+	useLoadMessageFirstEntreance();
 	
 	const [
-    funChatHistory,
+		funChatHistory,
     workChatHistory,
-    setFunChatHistory,
-    setWorkChatHistory,
     inputMessage,
     mainBodyRef,
+    setFunChatHistory,
+    setWorkChatHistory,
 	] = useFunWorkChat();
 
 	const [
@@ -44,11 +41,11 @@ const Body = () => {
 	] = useBackgroundImage({ mainBodyRef });
 
 	const [
-		addSmile,
-    checkPoUpSmile,
-		statePopUpSelectSmile,
 		popUpSmile,
-		setStatePopUpSelectSmile,
+    statePopUpSelectSmile,
+    checkPoUpSmile,
+    addSmile,
+    setStatePopUpSelectSmile,
 	] = usePopUpSmiles({ inputMessage });
 
 	const [
@@ -63,9 +60,9 @@ const Body = () => {
 	const [
 		foundMessageFunChat,
 		foundMessageWorkChat,
+		inputSearchRef,
 		clearSearch,
 		searchMessage,
-		inputSearch,
 		seeMessage,
 		lengthСheck,
 	] = useSearch({ 
@@ -78,22 +75,22 @@ const Body = () => {
 	const [
 		mousePositionX, 
     mousePositionY,
+    editTextState,
+    popUpEditRef,
     createPopUp,
     statePopUpEditMessage,
     deleteMessage,
     closeEditor,
     editMessage,
-    editTextState,
     editerMessage,
     checkPoUpEditClick,
-    popUpEdit,
   ] = useMessagePopUp({
-		 switchСhat, 
-		 setFunChatHistory, 
-		 setWorkChatHistory, 
-		 inputMessage, 
-		 funChatHistory, 
-		 workChatHistory
+		switchСhat, 
+		setFunChatHistory, 
+		setWorkChatHistory, 
+		inputMessage, 
+		funChatHistory, 
+		workChatHistory
 	});
 
 	const [
@@ -113,12 +110,6 @@ const Body = () => {
 		scrollToBottom,
 	 });
 
-
-	useEffect(() => {
-		!isFirstLocalStorage && setFirstLocalStorage();
-	});
-
-
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
 		statePopUpSelectSmile && checkPoUpSmile(e);
@@ -129,7 +120,7 @@ const Body = () => {
 			onClick={(e) => checkPopUps(e)}
 		>
 			{statePopUpEditMessage && <PopUpEditMessage
-				popUpEdit={popUpEdit}
+				popUpEditRef={popUpEditRef}
 				mousePositionX={mousePositionX}
 				mousePositionY={mousePositionY}
 				deleteMessage={deleteMessage}
@@ -140,7 +131,7 @@ const Body = () => {
 				foundMessageWorkChat={foundMessageWorkChat}
 				switchСhat={switchСhat}
 				seeMessage={seeMessage}
-				inputSearch={inputSearch}
+				inputSearchRef={inputSearchRef}
 				isSearch={isSearch}
 				clearSearch={clearSearch}
 				searchMessage={searchMessage}

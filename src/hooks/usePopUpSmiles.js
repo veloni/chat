@@ -14,12 +14,12 @@ const usePopUpSmiles = ({ inputMessage }) => {
 	};
 
 	return [
-    addSmile,
-    checkPoUpSmile,
-    statePopUpSelectSmile,
     popUpSmile,
+    statePopUpSelectSmile,
+    checkPoUpSmile,
+    addSmile,
     setStatePopUpSelectSmile,
-  ]
-}
+  ];
+};
 
-export default usePopUpSmiles
+export default usePopUpSmiles;

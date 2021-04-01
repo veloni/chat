@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
 
+import { getDataFromLocalStorage, setDataFromLocalStorage } from './helper';
+
 const useBackgroundImage = ({mainBodyRef}) => {
 
  	useEffect(() => {
 		firstLoadBackgroundMessage();
 	}); 
 
-	const isBackgroundMessage = JSON.parse(localStorage.getItem('firstLoad'));
+	const isBackgroundMessage = getDataFromLocalStorage('firstload');
 	
   const loadBackgroundImage = () => {
 		const input = document.createElement('input');
@@ -22,8 +24,8 @@ const useBackgroundImage = ({mainBodyRef}) => {
 				const pathImage = readerEvent.target.result; 
 		
 				if (pathImage.includes('/png')) {
-					localStorage.setItem('BackgroundImage', JSON.stringify(pathImage));
-					localStorage.setItem('isBackgroundImage', JSON.stringify(true));
+          setDataFromLocalStorage('BackgroundImage', pathImage);
+          setDataFromLocalStorage('isBackgroundImage', true);
 
 					mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
 				}
@@ -33,13 +35,14 @@ const useBackgroundImage = ({mainBodyRef}) => {
 	};
 
 	const deleteBackgroundImage = () => {
-		localStorage.setItem('BackgroundImage', JSON.stringify(''));
-		localStorage.setItem('isBackgroundImage', JSON.stringify(false));
+    setDataFromLocalStorage('BackgroundImage', '');
+    setDataFromLocalStorage('isBackgroundImage', false);
+
 		mainBodyRef.current.style.backgroundImage = 'none';
 	};
 
 	const firstLoadBackgroundMessage = () => {
-		const pathImage = JSON.parse(localStorage.getItem('BackgroundImage'));
+		const pathImage = getDataFromLocalStorage('BackgroundImage');
 		if (!isBackgroundMessage) {
 			mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
 		}
@@ -48,7 +51,7 @@ const useBackgroundImage = ({mainBodyRef}) => {
   return [
     loadBackgroundImage,
     deleteBackgroundImage,
-  ]
-}
+  ];
+};
 
-export default useBackgroundImage
+export default useBackgroundImage;

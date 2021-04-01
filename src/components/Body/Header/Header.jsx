@@ -3,10 +3,7 @@ import React from 'react';
 import './Header.scss';
 
 const Header = ({ 
-	setSwitchChat, 
-	setIsSearch, 
 	switchСhat,
-	scrollToBottom,
 	switchChatToFun,
 	switchChatToFWork,
 }) => {

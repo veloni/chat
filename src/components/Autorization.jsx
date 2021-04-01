@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { getDataFromLocalStorage, setDataFromLocalStorage } from '../hooks/helper';
+
 import './Autorization.scss';
 
 const Autorization = ({ autorizaton, setAutorizaton }) => {
@@ -8,8 +10,8 @@ const Autorization = ({ autorizaton, setAutorizaton }) => {
 	const [passwordValue, setPasswordValue] = useState('admin');
 
 	useEffect(() => {
-		const localLogin = JSON.parse(localStorage.getItem('userLogin'));
-		const localPassword = JSON.parse(localStorage.getItem('userPassword'));
+		const localLogin = getDataFromLocalStorage('userLogin');
+		const localPassword = getDataFromLocalStorage('userPassword');
 
 		if (localLogin !== loginValue && localPassword !== passwordValue) { return; };
 
@@ -25,9 +27,9 @@ const Autorization = ({ autorizaton, setAutorizaton }) => {
 
 		if (!isAutorizationPassed) { return; }
 
-		localStorage.setItem('userLogin', JSON.stringify(loginValue));  
-		localStorage.setItem('userPassword', JSON.stringify(passwordValue));  
-		localStorage.setItem('entranceDone', JSON.stringify(true))
+		setDataFromLocalStorage('userLogin', loginValue);  
+		setDataFromLocalStorage('userPassword', passwordValue);  
+		setDataFromLocalStorage('entranceDone', true)
 
     setAutorizaton(true);
   };
