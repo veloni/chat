@@ -86,7 +86,7 @@ const Body = () => {
 				editerMessage();
 				return;
 			}
-
+	
 			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
 			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
 
@@ -157,13 +157,15 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 
-		localHistory.map(function(item, index) {
+		localHistory.forEach(function(item, index) {
 			if (item.id === whatClick) {
 				localHistory.splice(index, 1);
 				return;
 			}
 		});
+
 		setLocalAndRenderForAllChat(localHistory);
+
 	};
 
 	const editMessage = () => {
@@ -174,8 +176,8 @@ const Body = () => {
 		let localHistory;
 
 		localHistory = giveLocalHistory();
-	
-		localHistory.map(function(item) {
+
+		localHistory.forEach(function(item) {
 			if (item.isImg === true) { 
 				return;
 			}
@@ -191,7 +193,7 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 
-		localHistory.map(function(item) {
+		localHistory.forEach(function(item) {
 			if (item.id === whatClick) {
 				item.message = inputMessage.current.value;
 			}
@@ -279,6 +281,7 @@ const Body = () => {
 		if (switchСhat) {
 			return (JSON.parse(localStorage.getItem('funChat')));
 		} 
+		console.log(2);
 		return (JSON.parse(localStorage.getItem('workChat')));
 	};
 
@@ -355,8 +358,8 @@ const Body = () => {
 	};
 
 	const setLocalAndRenderForAllChat = (localHistory) => {
-		setLocalAndRender('funChat', setFunChatHistory, localHistory); 
-		setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
+		switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
+		!switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
 	};
 
 	return (

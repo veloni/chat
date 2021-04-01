@@ -51,7 +51,7 @@ const Footer = ({
 			</textarea>
 		</div>
 		{editTextState && (
-			<div wrapper-icon-for-edit>
+			<div clasname="wrapper-icon-for-edit">
 				<div className="wrapper-icon-edit-delete">
 					<img 
 						src={iconEdit} 
