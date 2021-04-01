@@ -8,24 +8,43 @@ import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
 import RenderMessage from './RenderMessage/RenderMessage';
 
 import useMessagePopUp from '../../hooks/useMessagePopUp';
+import usePopUpSmiles from '../../hooks/usePopUpSmiles';
 import useLoadMessageFirstEntreance from '../../hooks/useLoadMessageFirstEntreance';
 import useSwitchChat from '../../hooks/useSwitchChat';
 import useFunWorkChat from '../../hooks/useFunWorkChat';
-
-import sticker from './sticker/sticker.png';
+import useBackgroundImage from '../../hooks/useBackgroundImage';
+import useSearch from '../../hooks/useSearch';
+import useMessage from '../../hooks/useMessage';
 
 import './Body.scss';
 
 const Body = () => {
-	const [isFirstLocalStorage, setFirstLocalStorage] = useLoadMessageFirstEntreance();
+	const [
+		isFirstLocalStorage,
+		setFirstLocalStorage
+	] = useLoadMessageFirstEntreance();
 	
 	const [
-		funChatHistory,
+    funChatHistory,
     workChatHistory,
     setFunChatHistory,
     setWorkChatHistory,
-		inputMessage,
+    inputMessage,
+    mainBodyRef,
 	] = useFunWorkChat();
+
+	const [
+		loadBackgroundImage,
+    deleteBackgroundImage,
+	] = useBackgroundImage({ mainBodyRef });
+
+	const [
+		addSmile,
+    checkPoUpSmile,
+		statePopUpSelectSmile,
+		popUpSmile,
+		setStatePopUpSelectSmile,
+	] = usePopUpSmiles({ inputMessage });
 
 	const [
 		switchСhat,
@@ -35,32 +54,55 @@ const Body = () => {
 	] = useSwitchChat();
 
 	const [
+		foundMessageFunChat,
+		foundMessageWorkChat,
+		isSearch,
+		clearSearch,
+		searchMessage,
+		setIsSearch,
+		inputSearch,
+		seeMessage,
+		lengthСheck,
+	] = useSearch({ switchСhat, inputMessage});
+
+	const [
 		mousePositionX, 
     mousePositionY,
-    whatClick,
     createPopUp,
     statePopUpEditMessage,
-    setStatePopUpEditMessage,
     deleteMessage,
     closeEditor,
     editMessage,
     editTextState,
-  ] = useMessagePopUp({switchСhat, setFunChatHistory, setWorkChatHistory, inputMessage, funChatHistory, workChatHistory});
+    editerMessage,
+    checkPoUpEditClick,
+    popUpEdit,
+  ] = useMessagePopUp({
+		 switchСhat, 
+		 setFunChatHistory, 
+		 setWorkChatHistory, 
+		 inputMessage, 
+		 funChatHistory, 
+		 workChatHistory
+	});
 
-	const isBackgroundMessage = JSON.parse(localStorage.getItem('firstLoad'));
+	const [
+		setLocalStorage,
+    addMessage,
+    addSticker,
+	] = useMessage({ 
+		inputMessage,
+		switchСhat,
+		funChatHistory,
+		workChatHistory,
+		setFunChatHistory,
+		setWorkChatHistory,
+		editTextState,
+		editerMessage,
+		mainBodyRef,
+	 });
 
-	const [statePopUpSelectSmile, setStatePopUpSelectSmile] = useState(false);
-	
-	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
-	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
-	const [isSearch, setIsSearch] = useState(false);
-	const [arrayFindMessage, setArrayFindMessage] = useState([]);
 
-	const mainBodyRef = useRef(null);
-	const popUpEdit = useRef(null);
-	const popUpSmile = useRef(null);
-	const inputSearch = useRef(null); 
-	
 	useEffect(() => {
 		!isFirstLocalStorage && setFirstLocalStorage();
 	});
@@ -68,10 +110,6 @@ const Body = () => {
 	useEffect(() => {
 		scrollToBottom();
 	}, []);
-
-	useEffect(() => {
-		firstLoadBackgroundMessage();
-	});
 
 	useEffect(() => {
  		renderData('workChat', setWorkChatHistory);
@@ -86,261 +124,15 @@ const Body = () => {
 		!!localHistory && setType(localHistory);
 	};
 
-	const addMessage = (e) => {
-		if (e.shiftKey && e.ctrlKey) {
-			inputMessage.current.value = `${inputMessage.current.value}\n`;
-			return;
-		}
-		setLocalStorage();  
-
-		if (e.key === 'Enter') {
-		 	e.preventDefault();
-			if (!inputMessage.current.value) { return; }
-
-		/* 	if (editTextState) { 
-				editerMessage();
-				return;
-			} */
-	
-			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
-			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
-
-	 		scrollToBottom();  
-
-		 	inputMessage.current.value = ''; 
-		}
-	};
-
-	const setData = (typeChat, setTypeChat, key, e) => {
-		setTypeChat([
-			...typeChat, 
-			{
-				date: giveDate(), 
-				message: e.target.value,
-				isImg: false,
-				id: typeChat.length,
-				nickName: "Ваши сообщения",
-			},
-		]);
-	};
-
-	const addSticker = () => {
-		switchСhat && setDataSticker(funChatHistory, setFunChatHistory, 'funChat');
-		!switchСhat && setDataSticker(workChatHistory, setWorkChatHistory, 'workChat');
-		
-		scrollToBottom();
-	};
-
-	const setDataSticker = (typeChat, setTypeChat) => {
-		setTypeChat([
-			...typeChat, 
-			{
-				date: giveDate(), 
-				message: sticker,
-				isImg: true,
-				id: typeChat.length,
-				nickName: "Ваши сообщения",
-			},
-		]);
-	};
-
-	const giveDate = () => {
-		const date = new Date();
-		const hour = date.getHours();
-		let min = date.getMinutes();
-
- 		if (min < 10) { 
-			min = `0${min}`;
-		}; 
-
-		return (`${hour}:${min}`);
-	};
-
-/* 	const editMessage = () => {
-		setLocalStorage();
-		setEditTextState(true);
-		setStatePopUpEditMessage(false); 
-
-		let localHistory;
-
-		localHistory = giveLocalHistory();
-
-		localHistory.forEach(function(item) {
-			if (item.isImg === true) { 
-				setEditTextState(false);
-				return;
-			}
-
-			if (item.id === whatClick) {
-				inputMessage.current.value = item.message;
-			}
-		});
-	}; */
-
-	const editerMessage = () => {
-		let localHistory;
-
-		localHistory = giveLocalHistory();
-
-		localHistory.forEach(function(item) {
-			if (item.id === whatClick) {
-				item.message = inputMessage.current.value;
-			}
-		});
-		
-		setLocalAndRenderForAllChat(localHistory);
-		
-		closeEditor();
-	};
-
-	const loadBackgroundImage = () => {
-		const input = document.createElement('input');
-		input.type = 'file';
-		
-		input.onchange = e => { 
-			const file = e.target.files[0]; 
-
-			const reader = new FileReader();
-			reader.readAsDataURL(file); 
-
-			reader.onload = readerEvent => {
-				const pathImage = readerEvent.target.result; 
-		
-				if (pathImage.includes('/png')) {
-					localStorage.setItem('BackgroundImage', JSON.stringify(pathImage));
-					localStorage.setItem('isBackgroundImage', JSON.stringify(true));
-
-					mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
-				}
-		  }
-		}
-		input.click();
-	};
-
-	const deleteBackgroundImage = () => {
-		localStorage.setItem('BackgroundImage', JSON.stringify(''));
-		localStorage.setItem('isBackgroundImage', JSON.stringify(false));
-		mainBodyRef.current.style.backgroundImage = 'none';
-	};
-
-	const firstLoadBackgroundMessage = () => {
-		const pathImage = JSON.parse(localStorage.getItem('BackgroundImage'));
-		if (isBackgroundMessage) {
-			mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
-		}
+	const scrollToBottom = () => {
+	 	setTimeout(() => {
+			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
+		}, 1); 
 	};
 
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
 		statePopUpSelectSmile && checkPoUpSmile(e);
-	};
-
-	const checkPoUpEditClick = (e) => {
-		if (statePopUpEditMessage && e.target !== popUpEdit) {
-		 	setStatePopUpEditMessage(false); 
-		}
-	};
-
-	const checkPoUpSmile = (e) => {
-		const isPopUpSmile = (statePopUpSelectSmile && e.target !== popUpSmile);
-		isPopUpSmile && setStatePopUpSelectSmile(!isPopUpSmile);
-	};
-
-	const addSmile = (emoji) => {
-		inputMessage.current.value = inputMessage.current.value + String.fromCodePoint(emoji); 
-	};
-
-	const scrollToBottom = () => {
-		setTimeout(() => {
-			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
-		}, 1);
-	};
-	
-	const setLocalStorage = () => {
-		switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
-		!switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
-	};
-
-	const giveLocalHistory = () => {
-		if (switchСhat) {
-			return (JSON.parse(localStorage.getItem('funChat')));
-		} 
-		return (JSON.parse(localStorage.getItem('workChat')));
-	};
-
-	const lengthСheck = () => {
-		if (Number.isInteger(inputMessage.current.value.length / 64)) {
-			inputMessage.current.value = `${inputMessage.current.value}\n`;
-		}
-	};
-
-	const setLocalAndRender = (typeChat, setTypeChat, localHistory) => {
-		localStorage.setItem(typeChat, JSON.stringify(localHistory));  
-		renderData(typeChat, setTypeChat);
-	};
-
-	const searchMessage = () => {
-		if (!inputSearch.current.value) { 
-			setFoundMessageFunChat(null);	
-			setFoundMessageWorkChat(null);	
-			return; 
-		};
-
-		if (inputSearch.current.value.length === 1) {
-			setIsSearch(false);
-		} else {
-			setIsSearch(true);
-		}
-
-		const localHistory = giveLocalHistory();
-
-		setArrayFindMessage([]);
-
-		localHistory.forEach((item,) => {
-			if (item.message.includes(inputSearch.current.value)) {
-				let triplePoint = '...';
-
-				if (item.message.length < 20) { 
-					triplePoint = '';
-				}
-
-				arrayFindMessage.push({
-					date: item.date, 
-					message: `${item.message.substr(0, 20)} ${triplePoint}`,
-					isImg: item.isImg,
-					id: item.id,
-					nickName: item.nickName,
-				},);
-			}
-		});
-
-		switchСhat && setFoundMessageFunChat(arrayFindMessage);	
-		!switchСhat && setFoundMessageWorkChat(arrayFindMessage);
-	};
-	
-	const seeMessage = (id) => {
-		setIsSearch(true);
-
-		document.getElementById(id).scrollIntoView();
-		document.getElementById(id).classList.add('find-message');
-
-		setTimeout(() => {
-			document.getElementById(id).classList.remove('find-message');
-		}, 2000);
-	};
-
-	const clearSearch = () => {
-		if (isSearch) {
-			setIsSearch(false);
-			setFoundMessageFunChat(null);	
-			setFoundMessageWorkChat(null);	
-			inputSearch.current.value = '';
-		}
-	};
-
-	const setLocalAndRenderForAllChat = (localHistory) => {
-		switchСhat && setLocalAndRender('funChat', setFunChatHistory, localHistory); 
-		!switchСhat && setLocalAndRender('workChat', setWorkChatHistory, localHistory); 
 	};
 
 	return (
