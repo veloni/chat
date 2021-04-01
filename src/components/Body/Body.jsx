@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -15,6 +15,7 @@ import useFunWorkChat from '../../hooks/useFunWorkChat';
 import useBackgroundImage from '../../hooks/useBackgroundImage';
 import useSearch from '../../hooks/useSearch';
 import useMessage from '../../hooks/useMessage';
+import useScroll from '../../hooks/useScroll';
 
 import './Body.scss';
 
@@ -34,6 +35,10 @@ const Body = () => {
 	] = useFunWorkChat();
 
 	const [
+    scrollToBottom,
+	] = useScroll({ mainBodyRef });
+
+	const [
 		loadBackgroundImage,
     deleteBackgroundImage,
 	] = useBackgroundImage({ mainBodyRef });
@@ -47,23 +52,28 @@ const Body = () => {
 	] = usePopUpSmiles({ inputMessage });
 
 	const [
-		switchСhat,
+    switchСhat,
     setSwitchChat,
     switchChatToFun,
     switchChatToFWork,
-	] = useSwitchChat();
+    setIsSearch,
+    isSearch,
+	] = useSwitchChat({ scrollToBottom });
 
 	const [
 		foundMessageFunChat,
 		foundMessageWorkChat,
-		isSearch,
 		clearSearch,
 		searchMessage,
-		setIsSearch,
 		inputSearch,
 		seeMessage,
 		lengthСheck,
-	] = useSearch({ switchСhat, inputMessage});
+	] = useSearch({ 
+		switchСhat, 
+		inputMessage, 
+		setIsSearch, 
+		isSearch
+	 });
 
 	const [
 		mousePositionX, 
@@ -100,6 +110,7 @@ const Body = () => {
 		editTextState,
 		editerMessage,
 		mainBodyRef,
+		scrollToBottom,
 	 });
 
 
@@ -107,28 +118,6 @@ const Body = () => {
 		!isFirstLocalStorage && setFirstLocalStorage();
 	});
 
-	useEffect(() => {
-		scrollToBottom();
-	}, []);
-
-	useEffect(() => {
- 		renderData('workChat', setWorkChatHistory);
-  }, []);
-
-	useEffect(() => {
-		renderData('funChat', setFunChatHistory); 
-  }, []);
-
-	const renderData = (key, setType ) => {
-		const localHistory = JSON.parse(localStorage.getItem(key));
-		!!localHistory && setType(localHistory);
-	};
-
-	const scrollToBottom = () => {
-	 	setTimeout(() => {
-			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
-		}, 1); 
-	};
 
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
@@ -162,7 +151,6 @@ const Body = () => {
 					switchСhat={switchСhat}
 					setIsSearch={setIsSearch}
 					setSwitchChat={setSwitchChat}
-					scrollToBottom={scrollToBottom}
 					switchChatToFun={switchChatToFun}
 					switchChatToFWork={switchChatToFWork}
 				/>

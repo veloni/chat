@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
-const useMessagePopUp = ({switchСhat, setFunChatHistory, setWorkChatHistory, inputMessage, funChatHistory, workChatHistory}) => {
+const useMessagePopUp = ({
+  switchСhat, 
+  setFunChatHistory, 
+  setWorkChatHistory, 
+  inputMessage, 
+  funChatHistory, 
+  workChatHistory
+}) => {
   const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
 	const [statePopUpEditMessage, setStatePopUpEditMessage] = useState(false);
   const [whatClick, setWhatClick] = useState(null);
   const [editTextState, setEditTextState] = useState(false); 
+
+	const popUpEdit = useRef(null);
 
 	const createPopUp = (e, id) => {
 		setWhatClick(id);
@@ -60,6 +69,28 @@ const useMessagePopUp = ({switchСhat, setFunChatHistory, setWorkChatHistory, in
   });
 };
 
+const editerMessage = () => {
+  let localHistory;
+
+  localHistory = giveLocalHistory();
+
+  localHistory.forEach(function(item) {
+    if (item.id === whatClick) {
+      item.message = inputMessage.current.value;
+    }
+  });
+  
+  setLocalAndRenderForAllChat(localHistory);
+  
+  closeEditor();
+};
+
+const checkPoUpEditClick = (e) => {
+  if (statePopUpEditMessage && e.target !== popUpEdit) {
+     setStatePopUpEditMessage(false); 
+  }
+};
+
 const setLocalStorage = () => {
   switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
   !switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
@@ -90,15 +121,15 @@ const renderData = (key, setType ) => {
   return [
     mousePositionX, 
     mousePositionY,
-    whatClick,
     createPopUp,
     statePopUpEditMessage,
-    setStatePopUpEditMessage,
     deleteMessage,
     closeEditor,
     editMessage,
     editTextState,
-    setEditTextState,
+    editerMessage,
+    checkPoUpEditClick,
+    popUpEdit,
   ]
 }
 

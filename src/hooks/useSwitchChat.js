@@ -1,18 +1,17 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
-const useSwitchChat = () => {
+const useSwitchChat = ( scrollToBottom ) => {
   const [switchСhat, setSwitchChat] = useState(true);
+  const [isSearch, setIsSearch] = useState(false);
 
   const switchChatToFun = () => {
-/* 		setIsSearch(false); */
+ 		setIsSearch(false); 
 		setSwitchChat(true);
-	/* 	scrollToBottom();  */
 	};
 
 	const switchChatToFWork = () => {
-/* 		setIsSearch(false); */
+ 		setIsSearch(false); 
 		setSwitchChat(false);
-	 /* 	scrollToBottom();  */
 	};
 
   return [
@@ -20,6 +19,8 @@ const useSwitchChat = () => {
     setSwitchChat,
     switchChatToFun,
     switchChatToFWork,
+    setIsSearch,
+    isSearch,
   ]
 }
 
