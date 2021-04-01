@@ -21,6 +21,8 @@ const useMessagePopUp = ({
 	const createPopUp = (e, id) => {
 		setWhatClick(id);
 
+    document.getElementById(id).classList.remove('find-message');
+
 		setMousePositionX(`${e.nativeEvent.pageX}px`);
 		setMousePositionY(`${e.nativeEvent.pageY}px`);
 

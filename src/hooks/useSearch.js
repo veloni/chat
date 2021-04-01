@@ -62,8 +62,9 @@ const useSearch = ({
 		document.getElementById(id).classList.add('find-message');
 
 		setTimeout(() => {
-			document.getElementById(id).classList.remove('find-message');
+			!!document.getElementById(id) && document.getElementById(id).classList.remove('find-message');
 		}, 2000);
+		
 	};
 
 	const clearSearch = () => {
