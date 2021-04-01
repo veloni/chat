@@ -157,13 +157,12 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 
-		localHistory.map.function((item, index) => {
+		localHistory.map(function(item, index) {
 			if (item.id === whatClick) {
 				localHistory.splice(index, 1);
 				return;
 			}
 		});
-
 		setLocalAndRenderForAllChat(localHistory);
 	};
 
@@ -176,7 +175,7 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 	
-		localHistory.map.function((item) => {
+		localHistory.map(function(item) {
 			if (item.isImg === true) { 
 				return;
 			}
@@ -192,7 +191,7 @@ const Body = () => {
 
 		localHistory = giveLocalHistory();
 
-		localHistory.map.function((item) => {
+		localHistory.map(function(item) {
 			if (item.id === whatClick) {
 				item.message = inputMessage.current.value;
 			}
