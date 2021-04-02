@@ -29,8 +29,8 @@ const useBackgroundImage = ({mainBodyRef}) => {
 
 					mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
 				}
-		  }
-		}
+		  };
+		};
 		input.click();
 	};
 
@@ -43,7 +43,7 @@ const useBackgroundImage = ({mainBodyRef}) => {
 
 	const firstLoadBackgroundMessage = () => {
 		const pathImage = getDataFromLocalStorage('BackgroundImage');
-		if (!isBackgroundMessage) {
+		if (!isBackgroundMessage && pathImage) {
 			mainBodyRef.current.style.backgroundImage = `url( ${pathImage} )`;
 		}
 	};

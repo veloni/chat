@@ -20,7 +20,7 @@ const useFunWorkChat = () => {
   const renderData = (key, setType ) => {
     const localHistory = getDataFromLocalStorage(key);
     !!localHistory && setType(localHistory);
- };
+  };
 
   return [
     funChatHistory,

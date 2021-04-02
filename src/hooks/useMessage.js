@@ -19,24 +19,24 @@ const useMessage = ({
 			inputMessage.current.value = `${inputMessage.current.value}\n`;
 			return;
 		}
-		
+
 		setLocalStorage();  
 
 		if (e.key === 'Enter') {
-		 	e.preventDefault();
+			e.preventDefault();
 			if (!inputMessage.current.value) { return; }
 
-		 	if (editTextState) { 
+			if (editTextState) { 
 				editerMessage();
 				return;
 			} 
-	
+
 			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
 			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
 
-	 		scrollToBottom();  
+			scrollToBottom();  
 
-		 	inputMessage.current.value = ''; 
+			inputMessage.current.value = ''; 
 		}
 	};
 

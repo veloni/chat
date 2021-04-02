@@ -5,8 +5,8 @@ const useScroll = ({ mainBodyRef }) => {
 		scrollToBottom();
 	}); 
 
-	 const scrollToBottom = () => {
-	  	setTimeout(() => {
+	const scrollToBottom = () => {
+		setTimeout(() => {
 			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
 		}, 1);  
 	}; 

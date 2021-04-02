@@ -19,32 +19,32 @@ const useMessagePopUp = ({
 	const popUpEditRef = useRef(null);
 
 	const createPopUp = (e, id) => {
-		setWhatClick(id);
+    setWhatClick(id);
 
     document.getElementById(id).classList.remove('find-message');
 
-		setMousePositionX(`${e.nativeEvent.pageX}px`);
-		setMousePositionY(`${e.nativeEvent.pageY}px`);
+    setMousePositionX(`${e.nativeEvent.pageX}px`);
+    setMousePositionY(`${e.nativeEvent.pageY}px`);
 
-		setStatePopUpEditMessage(true);
+    setStatePopUpEditMessage(true);
 	};
 
   const deleteMessage = () => {
     setStatePopUpEditMessage(false); 
 
-   let localHistory;
+    let localHistory;
 
-   localHistory = giveLocalHistory();
+    localHistory = giveLocalHistory();
 
-   localHistory.forEach(function(item, index) {
-     if (item.id === whatClick) {
-       localHistory.splice(index, 1);
-       return;
-     }
-   });
+    localHistory.forEach(function(item, index) {
+      if (item.id === whatClick) {
+        localHistory.splice(index, 1);
+      return;
+      }
+    });
 
-   setLocalAndRenderForAllChat(localHistory);
- };
+    setLocalAndRenderForAllChat(localHistory);
+  };
 
   const closeEditor = () => {
     setEditTextState(false);

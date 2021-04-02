@@ -1,14 +1,7 @@
- function getDataFromLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
-} 
+export const getDataFromLocalStorage = (key) => (
+  JSON.parse(localStorage.getItem(key))
+);
 
-function setDataFromLocalStorage(key, data) {
-  return localStorage.setItem(key, JSON.stringify(data));
-} 
-
-module.exports = {
-  getDataFromLocalStorage: getDataFromLocalStorage,
-  setDataFromLocalStorage: setDataFromLocalStorage,
+export const setDataFromLocalStorage = (key, data) => {
+  localStorage.setItem(key, JSON.stringify(data));
 };
-
- 

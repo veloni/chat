@@ -21,11 +21,7 @@ const useSearch = ({
 			return; 
 		};
 
-		if (inputSearchRef.current.value.length === 1) {
-			setIsSearch(false);
-		} else {
-			setIsSearch(true);
-		}
+		setIsSearch(!(inputSearchRef.current.value.length === 1));
 
 		const localHistory = giveLocalHistory();
 

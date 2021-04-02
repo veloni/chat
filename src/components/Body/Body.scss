@@ -9,11 +9,11 @@
   height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
 }
 
 .main-body {
-  height: 90%;
+  height: 90%; 
   border-bottom: 4px solid #CEE0F2;
   overflow-y: auto;
   scroll-behavior: smooth;

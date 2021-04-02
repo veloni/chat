@@ -8,7 +8,8 @@ const RenderMessage = ({
 	createPopUp,
 	switchСhat,
 }) => (
-	<div className="wrapper-main-body">
+	<div 
+	className="wrapper-main-body">
 		{switchСhat && funChatHistory.map((item, key) => (
 			<Message
 				item={item}

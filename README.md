@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+# О проекте
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1) Приложение создано при помощи React Hook, хуки передаются через компоненту Body из одной компоненты в другую.
 
-## Available Scripts
+2) При старте приложения создаётся форма ввоода, при вводе login:"admin" password:"admin" происходит переход в сам чат, при дальнейшем заходе в приложение форма не появляется. Так как уже вход был совершен.
 
-In the project directory, you can run:
+3) В приложении реализованы два чата, оба чата записываются в свой state и в свой ключ local storage. 
 
-### `npm start`
+4) Добавлена возможности редактирования и удаления сообщений, при нажатии левой клавишы мыши создаётся PopUp с выбором действия.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+5) При удалении данного сообщения удаляется из state и localStorage, при редактировании, в форме ввода сообщений появляется контент выбраного сообщения для редактирования, после нажатия Enter сообщение меняется. Справа от формы появляется знак редактирования, и отмены редактирования.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+6) Добавлены смайлики и один стикер. 
 
-### `npm test`
+7) Добавлены возможность выбора background image, формата png, для фона, находится слева от формы ввода сообщения.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+8) При переключении чата, меняется state и происходит рендер другого чата.
 
-### `npm run build`
+9) Поиск находится в Aside , при вводе сообщения происходит поиск в localstorage, и рендер найденных сообщений, при нажатии на нужное сообщение происходит скролл к даному сообщению и подсветка.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+10) Создавал с помощью `create-react-app`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+11) [Ссылка на проект](https://veloni.github.io/)
