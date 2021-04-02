@@ -10,7 +10,7 @@ const useSwitchChat = ({ scrollToBottom }) => {
     scrollToBottom();
 	};
 
-	const switchChatToFWork = () => {
+	const switchChatToWork = () => {
  		setIsSearch(false); 
 		setSwitchChat(false);
     scrollToBottom();
@@ -20,7 +20,7 @@ const useSwitchChat = ({ scrollToBottom }) => {
     switchСhat,
     setSwitchChat,
     switchChatToFun,
-    switchChatToFWork,
+    switchChatToWork,
     setIsSearch,
     isSearch,
   ];

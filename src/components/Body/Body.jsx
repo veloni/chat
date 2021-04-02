@@ -52,7 +52,7 @@ const Body = () => {
     switchСhat,
     setSwitchChat,
     switchChatToFun,
-    switchChatToFWork,
+    switchChatToWork,
     setIsSearch,
     isSearch,
 	] = useSwitchChat({ scrollToBottom });
@@ -69,7 +69,7 @@ const Body = () => {
 		switchСhat, 
 		inputMessage, 
 		setIsSearch, 
-		isSearch
+		isSearch,
 	 });
 
 	const [
@@ -90,7 +90,7 @@ const Body = () => {
 		setWorkChatHistory, 
 		inputMessage, 
 		funChatHistory, 
-		workChatHistory
+		workChatHistory,
 	});
 
 	const [
@@ -116,7 +116,8 @@ const Body = () => {
 	};
 
 	return (
-		<div className="wrapper-main"
+		<div 
+			className="wrapper-main"
 			onClick={(e) => checkPopUps(e)}
 		>
 			{statePopUpEditMessage && <PopUpEditMessage
@@ -143,7 +144,7 @@ const Body = () => {
 					setIsSearch={setIsSearch}
 					setSwitchChat={setSwitchChat}
 					switchChatToFun={switchChatToFun}
-					switchChatToFWork={switchChatToFWork}
+					switchChatToWork={switchChatToWork}
 				/>
 				<div 
 					className="main-body"

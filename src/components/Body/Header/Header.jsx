@@ -5,7 +5,7 @@ import './Header.scss';
 const Header = ({ 
 	switchСhat,
 	switchChatToFun,
-	switchChatToFWork,
+	switchChatToWork,
 }) => {
 	
 	const clearStorage = () => {
@@ -19,7 +19,7 @@ const Header = ({
 			<div className="header-wrapper-switch-chat">
 					<span 
 						className={`icon-chats ${!switchСhat ? 'active-chat-button' : '' }`}
-						onClick={() => switchChatToFWork()}
+						onClick={() => switchChatToWork()}
 					>
 						Рабочий чат
 					</span>

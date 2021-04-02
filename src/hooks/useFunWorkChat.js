@@ -13,11 +13,11 @@ const useFunWorkChat = () => {
     renderData('workChat', setWorkChatHistory);
   }, []);
 
- useEffect(() => {
+  useEffect(() => {
     renderData('funChat', setFunChatHistory); 
   }, []);
 
- const renderData = (key, setType ) => {
+  const renderData = (key, setType ) => {
     const localHistory = getDataFromLocalStorage(key);
     !!localHistory && setType(localHistory);
  };

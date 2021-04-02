@@ -13,7 +13,7 @@ const Aside = ({
 	switchСhat, 
 	foundMessageFunChat, 
 	foundMessageWorkChat, 
-	seeMessage 
+	seeMessage,
 }) => { 
 
 	return (
@@ -27,7 +27,7 @@ const Aside = ({
 					<div className="wraper-search-icon">
 						<img 
 							src={isSearch ? iconClose : iconSearch} 
-							className="icon-search" 
+							className={isSearch ? "close-icon-search" : "icon-search"} 
 							alt="iconSearch"
 							onClick={() => clearSearch()}
 						/>

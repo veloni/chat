@@ -6,7 +6,7 @@ const useSearch = ({
 	switchСhat, 
 	inputMessage, 
 	setIsSearch, 
-	isSearch 
+	isSearch,
 }) => {
 	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
@@ -32,7 +32,7 @@ const useSearch = ({
 		setArrayFindMessage([]);
 
 		localHistory.forEach((item) => {
-			if (item.message.includes(inputSearchRef.current.value)) {
+			if (item.message.toLowerCase().includes(inputSearchRef.current.value.toLowerCase())) {
 				let triplePoint = '...';
 
 				if (item.isImg === true) { return; }

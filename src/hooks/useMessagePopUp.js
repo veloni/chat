@@ -8,7 +8,7 @@ const useMessagePopUp = ({
   setWorkChatHistory, 
   inputMessage, 
   funChatHistory, 
-  workChatHistory
+  workChatHistory,
 }) => {
   const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);

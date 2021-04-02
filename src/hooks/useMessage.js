@@ -19,6 +19,7 @@ const useMessage = ({
 			inputMessage.current.value = `${inputMessage.current.value}\n`;
 			return;
 		}
+		
 		setLocalStorage();  
 
 		if (e.key === 'Enter') {
@@ -40,16 +41,7 @@ const useMessage = ({
 	};
 
 	const setData = (typeChat, setTypeChat, key, e) => {
-		setTypeChat([
-			...typeChat, 
-			{
-				date: giveDate(), 
-				message: e.target.value,
-				isImg: false,
-				id: typeChat.length,
-				nickName: "Ваши сообщения",
-			},
-		]);
+		setTypeCharForAll(typeChat, setTypeChat, false, e.target.value);
 	};
 
 	const addSticker = () => {
@@ -60,17 +52,21 @@ const useMessage = ({
 	};
 
 	const setDataSticker = (typeChat, setTypeChat) => {
+		setTypeCharForAll(typeChat, setTypeChat, true, sticker);
+	};
+
+	const setTypeCharForAll = (typeChat, setTypeChat, isImg, value) => {
 		setTypeChat([
 			...typeChat, 
 			{
 				date: giveDate(), 
-				message: sticker,
-				isImg: true,
+				message: value,
 				id: typeChat.length,
-				nickName: "Ваши сообщения",
+				nickName: 'Ваши сообщения',
+				isImg,
 			},
 		]);
-	};
+	} 
 
 	const giveDate = () => {
 		const date = new Date();
@@ -90,9 +86,9 @@ const useMessage = ({
 	};
 
   return [
-    setLocalStorage,
-    addMessage,
-    addSticker,
+		setLocalStorage,
+		addMessage,
+		addSticker,
   ];
 };
 
