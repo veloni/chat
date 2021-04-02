@@ -10,6 +10,12 @@ const useFunWorkChat = () => {
   const mainBodyRef = useRef(null);
 
   useEffect(() => {
+    setTimeout(() => {
+      mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
+    }, 1);
+  }, []);
+  
+  useEffect(() => {
     renderData('workChat', setWorkChatHistory);
   }, []);
 

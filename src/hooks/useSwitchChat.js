@@ -5,16 +5,18 @@ const useSwitchChat = (scrollToBottom) => {
   const [isSearch, setIsSearch] = useState(false);
 
   const switchChatToFun = () => {
- 		setIsSearch(false); 
-		setSwitchChat(true);
-    scrollToBottom();
+    switcherChat(false, true)
 	};
 
 	const switchChatToWork = () => {
- 		setIsSearch(false); 
-		setSwitchChat(false);
-    scrollToBottom();
+    switcherChat(false, false);
 	};
+
+  const switcherChat = (oneBol, twoBol) => {
+    setIsSearch(oneBol); 
+		setSwitchChat(twoBol);
+    scrollToBottom();
+  }
 
   return [
     switchСhat,

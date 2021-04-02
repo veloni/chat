@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -20,7 +20,6 @@ import useScroll from '../../hooks/useScroll';
 import './Body.scss';
 
 const Body = () => {
-
 	useLoadMessageFirstEntreance();
 	
 	const [
@@ -114,6 +113,7 @@ const Body = () => {
 		checkPoUpEditClick(e);
 		statePopUpSelectSmile && checkPoUpSmile(e);
 	};
+
 
 	return (
 		<div 
