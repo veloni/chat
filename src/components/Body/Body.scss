@@ -6,26 +6,30 @@
 }
 
 .wrapper-header-body {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;  
 }
 
 .main-body {
-  height: 90%; 
+  height: 88%; 
   border-bottom: 4px solid #CEE0F2;
   overflow-y: auto;
   scroll-behavior: smooth;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: repeat;
 }
 
 .wrapper-main-body {
-  width: 95%;
-  height: 90%;
+  height: auto;
+  width: auto;
+}
+
+.wrapper-main-body-two {
+  padding-top: 5%;
+  padding-left: 2%;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .find-message {

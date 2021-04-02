@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { getDataFromLocalStorage, setDataFromLocalStorage } from '../hooks/helper';
+import { getDataFromLocalStorage, setDataFromLocalStorage } from '../helper';
 
 import './Autorization.scss';
 

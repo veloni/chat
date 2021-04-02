@@ -1,18 +1,18 @@
 import sticker from '../sticker/sticker.png';
 
-import { setDataFromLocalStorage } from './helper';
+import { setDataFromLocalStorage } from '../helper';
 
-const useMessage = ({ 
+const useMessage = (
 	inputMessage,
-		switchСhat,
-		funChatHistory,
-		workChatHistory,
-		setFunChatHistory,
-		setWorkChatHistory,
-		editTextState,
-		editerMessage,
-    scrollToBottom,
- }) => {
+	switchСhat,
+	funChatHistory,
+	workChatHistory,
+	setFunChatHistory,
+	setWorkChatHistory,
+	editTextState,
+	editerMessage,
+	scrollToBottom,
+) => {
 
   const addMessage = (e) => {
 		if (e.shiftKey && e.ctrlKey) {
@@ -31,8 +31,8 @@ const useMessage = ({
 				return;
 			} 
 
-			switchСhat && setData(funChatHistory, setFunChatHistory, 'funChat', e);
-			!switchСhat && setData(workChatHistory, setWorkChatHistory, 'workChat', e);
+			switchСhat && setData(funChatHistory, setFunChatHistory, e);
+			!switchСhat && setData(workChatHistory, setWorkChatHistory, e);
 
 			scrollToBottom();  
 
@@ -40,13 +40,13 @@ const useMessage = ({
 		}
 	};
 
-	const setData = (typeChat, setTypeChat, key, e) => {
+	const setData = (typeChat, setTypeChat, e) => {
 		setTypeCharForAll(typeChat, setTypeChat, false, e.target.value);
 	};
 
 	const addSticker = () => {
-		switchСhat && setDataSticker(funChatHistory, setFunChatHistory, 'funChat');
-		!switchСhat && setDataSticker(workChatHistory, setWorkChatHistory, 'workChat');
+		switchСhat && setDataSticker(funChatHistory, setFunChatHistory);
+		!switchСhat && setDataSticker(workChatHistory, setWorkChatHistory);
 		
 		scrollToBottom();
 	};

@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 
-import { getDataFromLocalStorage, setDataFromLocalStorage } from './helper';
+import { getDataFromLocalStorage, setDataFromLocalStorage } from '../helper';
 
-const useBackgroundImage = ({mainBodyRef}) => {
-
+const useBackgroundImage = (mainBodyRef) => {
  	useEffect(() => {
 		firstLoadBackgroundMessage();
 	}); 

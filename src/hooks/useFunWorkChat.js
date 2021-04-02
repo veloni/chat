@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-import { getDataFromLocalStorage } from './helper';
+import { getDataFromLocalStorage } from '../helper';
 
 const useFunWorkChat = () => {
   const [funChatHistory, setFunChatHistory] = useState([]);

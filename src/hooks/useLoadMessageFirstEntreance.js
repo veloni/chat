@@ -1,4 +1,4 @@
-import { setDataFromLocalStorage } from './helper';
+import { setDataFromLocalStorage } from '../helper';
 
 import { useEffect } from 'react';
 

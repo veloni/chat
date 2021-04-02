@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -20,6 +20,7 @@ import useScroll from '../../hooks/useScroll';
 import './Body.scss';
 
 const Body = () => {
+
 	useLoadMessageFirstEntreance();
 	
 	const [
@@ -31,14 +32,12 @@ const Body = () => {
     setWorkChatHistory,
 	] = useFunWorkChat();
 
-	const [
-    scrollToBottom,
-	] = useScroll({ mainBodyRef });
+	const scrollToBottom = useScroll(mainBodyRef);
 
 	const [
 		loadBackgroundImage,
     deleteBackgroundImage,
-	] = useBackgroundImage({ mainBodyRef });
+	] = useBackgroundImage(mainBodyRef);
 
 	const [
 		popUpSmile,
@@ -46,7 +45,7 @@ const Body = () => {
     checkPoUpSmile,
     addSmile,
     setStatePopUpSelectSmile,
-	] = usePopUpSmiles({ inputMessage });
+	] = usePopUpSmiles(inputMessage);
 
 	const [
     switchСhat,
@@ -55,22 +54,23 @@ const Body = () => {
     switchChatToWork,
     setIsSearch,
     isSearch,
-	] = useSwitchChat({ scrollToBottom });
+	] = useSwitchChat(scrollToBottom);
 
 	const [
 		foundMessageFunChat,
 		foundMessageWorkChat,
+		fondMessageActive,
 		inputSearchRef,
 		clearSearch,
 		searchMessage,
 		seeMessage,
 		lengthСheck,
-	] = useSearch({ 
+	] = useSearch(
 		switchСhat, 
 		inputMessage, 
 		setIsSearch, 
 		isSearch,
-	 });
+	 );
 
 	const [
 		mousePositionX, 
@@ -84,20 +84,21 @@ const Body = () => {
     editMessage,
     editerMessage,
     checkPoUpEditClick,
-  ] = useMessagePopUp({
+  ] = useMessagePopUp(
 		switchСhat, 
+		fondMessageActive,
 		setFunChatHistory, 
 		setWorkChatHistory, 
 		inputMessage, 
 		funChatHistory, 
 		workChatHistory,
-	});
+	);
 
 	const [
 		setLocalStorage,
     addMessage,
     addSticker,
-	] = useMessage({ 
+	] = useMessage(
 		inputMessage,
 		switchСhat,
 		funChatHistory,
@@ -106,9 +107,8 @@ const Body = () => {
 		setWorkChatHistory,
 		editTextState,
 		editerMessage,
-		mainBodyRef,
 		scrollToBottom,
-	 });
+	 );
 
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);

@@ -1,16 +1,17 @@
 import { useState, useRef } from 'react';
 
-import { getDataFromLocalStorage } from './helper';
+import { getDataFromLocalStorage } from '../helper';
 
-const useSearch = ({ 
+const useSearch = (
 	switchСhat, 
 	inputMessage, 
 	setIsSearch, 
 	isSearch,
-}) => {
+) => {
 	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
 	const [arrayFindMessage, setArrayFindMessage] = useState([]);
+	const [fondMessageActive, setFondMessageActive] = useState(false);
 
 	const inputSearchRef = useRef(null); 
 
@@ -21,7 +22,7 @@ const useSearch = ({
 			return; 
 		};
 
-		setIsSearch(!(inputSearchRef.current.value.length === 1));
+		setIsSearch(inputSearchRef.current.value.length !== 1);
 
 		const localHistory = giveLocalHistory();
 
@@ -56,9 +57,12 @@ const useSearch = ({
 
 		document.getElementById(id).scrollIntoView();
 		document.getElementById(id).classList.add('find-message');
+		
+		setFondMessageActive(true);
 
 		setTimeout(() => {
 			!!document.getElementById(id) && document.getElementById(id).classList.remove('find-message');
+			setFondMessageActive(false);
 		}, 2000);
 		
 	};
@@ -88,6 +92,7 @@ const useSearch = ({
 	return [
 		foundMessageFunChat,
 		foundMessageWorkChat,
+		fondMessageActive,
 		inputSearchRef,
 		clearSearch,
 		searchMessage,

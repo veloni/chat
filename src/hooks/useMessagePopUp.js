@@ -1,15 +1,16 @@
 import { useState, useRef } from 'react';
 
-import { getDataFromLocalStorage } from './helper';
+import { getDataFromLocalStorage, setDataFromLocalStorage } from '../helper';
 
-const useMessagePopUp = ({
+const useMessagePopUp = (
   switchСhat, 
+  fondMessageActive,
   setFunChatHistory, 
   setWorkChatHistory, 
   inputMessage, 
   funChatHistory, 
   workChatHistory,
-}) => {
+) => {
   const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
 	const [statePopUpEditMessage, setStatePopUpEditMessage] = useState(false);
@@ -21,7 +22,7 @@ const useMessagePopUp = ({
 	const createPopUp = (e, id) => {
     setWhatClick(id);
 
-    document.getElementById(id).classList.remove('find-message');
+    fondMessageActive && document.getElementById(id).classList.remove('find-message');
 
     setMousePositionX(`${e.nativeEvent.pageX}px`);
     setMousePositionY(`${e.nativeEvent.pageY}px`);
@@ -89,14 +90,13 @@ const useMessagePopUp = ({
   };
 
   const checkPoUpEditClick = (e) => {
-    if (statePopUpEditMessage && e.target !== popUpEditRef) {
-      setStatePopUpEditMessage(false); 
-    }
+    const decompCheckPoistion = statePopUpEditMessage && e.target !== popUpEditRef;
+    decompCheckPoistion && setStatePopUpEditMessage(!decompCheckPoistion); 
   };
 
   const setLocalStorage = () => {
-    switchСhat && localStorage.setItem('funChat', JSON.stringify(funChatHistory));  
-    !switchСhat && localStorage.setItem('workChat', JSON.stringify(workChatHistory));
+    switchСhat && setDataFromLocalStorage('funChat', funChatHistory);  
+    !switchСhat && setDataFromLocalStorage('workChat', workChatHistory);
   };
 
   const setLocalAndRenderForAllChat = (localHistory) => {
@@ -117,7 +117,7 @@ const useMessagePopUp = ({
   };
 
   const renderData = (key, setType ) => {
-    const localHistory = JSON.parse(localStorage.getItem(key));
+    const localHistory = getDataFromLocalStorage(key);
     !!localHistory && setType(localHistory);
   };
 

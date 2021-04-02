@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-const usePopUpSmiles = ({ inputMessage }) => {
+const usePopUpSmiles = (inputMessage) => {
 	const [statePopUpSelectSmile, setStatePopUpSelectSmile] = useState(false);
 	const popUpSmile = useRef(null);
 

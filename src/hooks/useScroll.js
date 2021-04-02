@@ -1,17 +1,16 @@
 import { useEffect } from 'react';
 
-const useScroll = ({ mainBodyRef }) => {
-	useEffect(() => {
-		scrollToBottom();
-	}); 
+const useScroll = (mainBodyRef) => {
 
+	useEffect(() => {
+		mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
+  },[]);
+	
 	const scrollToBottom = () => {
-		setTimeout(() => {
-			mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
-		}, 1);  
+		mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
 	}; 
 
-  return [scrollToBottom];
+  return scrollToBottom;
 }
 
 export default useScroll;
