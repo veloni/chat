@@ -15,6 +15,7 @@ const useMessage = (
 	scrollToBottom,
 ) => {
 	const [rowTextArea, setRowTextArea] = useState(2);
+	const [backSpaceDown, setBackSpaceDown] = useState(false);
 
   const addMessage = (e) => {
 		if (e.shiftKey && e.ctrlKey) {
@@ -22,6 +23,15 @@ const useMessage = (
 			scrollToBottom();  
 			return;
 		}
+ 
+		if (e.key === 'Backspace') {
+			setBackSpaceDown(true);
+			const valueLenght = Number.isInteger((inputMessage.current.value.length - 1) / 50); 
+			valueLenght && setRowTextArea(rowTextArea - 1);
+			return;
+		}
+
+		setBackSpaceDown(false);
 
 		setLocalStorage();  
 
@@ -94,12 +104,21 @@ const useMessage = (
 	};
 
 	const lengthСheck = () => {
-		const valueLenght = Number.isInteger((inputMessage.current.value.length + 1) / 70);
+		const valueLenght = Number.isInteger((inputMessage.current.value.length + 1) / 50);
+		
+		inputMessage.current.value.length === 0 && setRowTextArea(2);
+
 		valueLenght && newRowTextArea();
 	};
 
 	const newRowTextArea = () => {
-		rowTextArea !== 5 && setRowTextArea(rowTextArea + 1);
+		if (backSpaceDown) {
+			return;
+		}
+		
+ 	 	rowTextArea !== 5 && setRowTextArea(rowTextArea + 1);  
+			
+		scrollToBottom();  
 		if (inputMessage.current.value) {
 			inputMessage.current.value = `${inputMessage.current.value}\n`;
 		}
