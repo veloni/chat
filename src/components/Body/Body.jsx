@@ -1,12 +1,14 @@
 import React from 'react';
 
 import Header from './Header/Header';
-import Footer from './Footer/Footer';
+import FormChat from './FormChat/FormChat';
 import Aside from './Aside/Aside';
 import PopUpEditMessage from './PopUpEditMessage/PopUpEditMessage';
 import PopUpSelectSmile from './PopUpSelectSmile/PopUpSelectSmile';
 import RenderMessage from './RenderMessage/RenderMessage';
 
+import useScrollFirstRender from '../../hooks/useScrollFirstRender';
+import useCheckPopUps from '../../hooks/useCheckPopUps';
 import useMessagePopUp from '../../hooks/useMessagePopUp';
 import usePopUpSmiles from '../../hooks/usePopUpSmiles';
 import useLoadMessageFirstEntreance from '../../hooks/useLoadMessageFirstEntreance';
@@ -32,6 +34,8 @@ const Body = () => {
 	] = useFunWorkChat();
 
 	const scrollToBottom = useScroll(mainBodyRef);
+
+	const useScrollEff = useScrollFirstRender(scrollToBottom);
 
 	const [
 		loadBackgroundImage,
@@ -73,6 +77,7 @@ const Body = () => {
 	const [
 		mousePositionX, 
     mousePositionY,
+		mousePositionYTop,
     editTextState,
     popUpEditRef,
     createPopUp,
@@ -110,10 +115,15 @@ const Body = () => {
 		scrollToBottom,
 	);
 
-	const checkPopUps = (e) => {
-		checkPoUpEditClick(e);
-		statePopUpSelectSmile && checkPoUpSmile(e);
-	};
+	const [
+		checkPopUps
+	] = useCheckPopUps(
+		checkPoUpEditClick, 
+		statePopUpSelectSmile, 
+		checkPoUpSmile
+	);
+
+	useScrollEff();
 
 	return (
 		<div 
@@ -154,7 +164,7 @@ const Body = () => {
 					popUpSmile={popUpSmile}
 					addSmile={addSmile}
 				/>}
-				<Footer
+				<FormChat
 					loadBackgroundImage={loadBackgroundImage}
 					deleteBackgroundImage={deleteBackgroundImage}
 					setLocalStorage={setLocalStorage}
@@ -173,6 +183,7 @@ const Body = () => {
 					popUpEditRef={popUpEditRef}
 					mousePositionX={mousePositionX}
 					mousePositionY={mousePositionY}
+					mousePositionYTop={mousePositionYTop}
 					deleteMessage={deleteMessage}
 					editMessage={editMessage}
 				/>}

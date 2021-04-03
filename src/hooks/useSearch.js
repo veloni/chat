@@ -56,7 +56,7 @@ const useSearch = (
 		setIsSearch(true);
 
 		document.getElementById(id).scrollIntoView();
-		document.getElementById(id).classList.add('find-message');
+ 		document.getElementById(id).classList.add('find-message'); 
 		
 		setFondMessageActive(true);
 
@@ -64,7 +64,7 @@ const useSearch = (
 			!!document.getElementById(id) && document.getElementById(id).classList.remove('find-message');
 			setFondMessageActive(false);
 		}, 2000);
-		
+		 
 	};
 
 	const clearSearch = () => {

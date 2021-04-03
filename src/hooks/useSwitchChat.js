@@ -1,11 +1,13 @@
 import { useState } from 'react';
 
+import { getDataFromLocalStorage, setDataFromLocalStorage } from '../helper';
+
 const useSwitchChat = (scrollToBottom) => {
-  const [switchСhat, setSwitchChat] = useState(true);
-  const [isSearch, setIsSearch] = useState(false);
+  const [switchСhat, setSwitchChat] = useState(getDataFromLocalStorage('isTypeChat'));
+  const [isSearch, setIsSearch] = useState(getDataFromLocalStorage('isTypeChat'));
 
   const switchChatToFun = () => {
-    switcherChat(false, true)
+    switcherChat(false, true);
 	};
 
 	const switchChatToWork = () => {
@@ -16,6 +18,7 @@ const useSwitchChat = (scrollToBottom) => {
     setIsSearch(oneBol); 
 		setSwitchChat(twoBol);
     scrollToBottom();
+    setDataFromLocalStorage('isTypeChat', twoBol);
   }
 
   return [

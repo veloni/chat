@@ -13,6 +13,7 @@ const useMessagePopUp = (
 ) => {
   const [mousePositionX, setMousePositionX] = useState(null);
 	const [mousePositionY, setMousePositionY] = useState(null);
+  const [mousePositionYTop, setMousePositionYTop] = useState(null);
 	const [statePopUpEditMessage, setStatePopUpEditMessage] = useState(false);
   const [whatClick, setWhatClick] = useState(null);
   const [editTextState, setEditTextState] = useState(false); 
@@ -22,7 +23,12 @@ const useMessagePopUp = (
 	const createPopUp = (e, id) => {
     setWhatClick(id);
 
+    document.getElementById(id).scrollIntoView();
+
     foundMessageActive && document.getElementById(id).classList.remove('find-message');
+
+    e.pageY > 150 && setMousePositionYTop(100);
+    e.pageY < 150 && setMousePositionYTop(0);
 
     setMousePositionX(`${e.nativeEvent.pageX}px`);
     setMousePositionY(`${e.nativeEvent.pageY}px`);
@@ -124,6 +130,7 @@ const useMessagePopUp = (
   return [
     mousePositionX, 
     mousePositionY,
+    mousePositionYTop,
     editTextState,
     popUpEditRef,
     createPopUp,

@@ -10,14 +10,14 @@ const RenderMessage = ({
 }) => (
 	<div className="wrapper-main-body">
 		<div className="wrapper-main-body-two">
-			{switchСhat && funChatHistory.slice(0).reverse().map((item, key) => (
+			{switchСhat && funChatHistory.map((item, key) => (
 				<Message
 					item={item}
 					key={key}
 					createPopUp={createPopUp}
 				/>
 			))} 
-			{!switchСhat && workChatHistory.slice(0).reverse().map((item, key) => (
+			{!switchСhat && workChatHistory.map((item, key) => (
 				<Message
 					item={item}
 					key={key}

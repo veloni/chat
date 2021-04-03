@@ -5,6 +5,7 @@ import './PopUpEditMessage.scss';
 const PopUpEditMessage = ({ 
 	mousePositionX, 
 	mousePositionY, 
+	mousePositionYTop,
 	deleteMessage, 
 	editMessage,
 	popUpEditRef,
@@ -13,7 +14,7 @@ const PopUpEditMessage = ({
 		className="wrapper-pop-up"
 		ref={popUpEditRef}
 		style={{ 
-			top: `${parseInt(mousePositionY) - 100}px`, 
+			top: `${parseInt(mousePositionY) - mousePositionYTop}px`, 
 			left: mousePositionX, 
 		}}
 	>

@@ -6,9 +6,9 @@ import iconClose from './svg/close.svg';
 import iconBackground from './svg/background.svg'; 
 import iconSticker from './svg/sticker/sticker.png'; 
 
-import './Footer.scss';
+import './FormChat.scss';
 
-const Footer = ({ 
+const FormChat = ({ 
 	setLocalStorage, 
 	addMessage, 
 	inputMessage, 
@@ -22,12 +22,12 @@ const Footer = ({
 	lengthСheck,
 	rowTextArea,
 }) => (
-	<div className="wrapper-footer">
+	<div className="wrapper-form-chat">
 		<div className="wrapper-icon-for-backgrond-image">
 			<div className="wrapper-icon-edit-delete">
 				<img 
 					src={iconBackground} 
-					className="icon-footer" 
+					className="icon-form-chat" 
 					alt="iconAddFiles"
 					onClick={() => loadBackgroundImage()}
 				/>
@@ -70,12 +70,12 @@ const Footer = ({
 				</div>
 			</div>
 		)}
-		<div className="wrapper-icon-footer">
+		<div className="wrapper-icon-form-chat">
 			<img 
 				onClick={() => setStatePopUpSelectSmile(!statePopUpSelectSmile)}
 				src={iconSmile} 
 				title="smiles"
-				className="icon-footer" 
+				className="icon-form-chat" 
 				alt="iconAddFiles"
 			/>
 			<img 
@@ -83,11 +83,11 @@ const Footer = ({
 				onMouseUp={() => setLocalStorage()}
 				title="sticker"
 				src={iconSticker} 
-				className="icon-footer" 
+				className="icon-form-chat" 
 				alt="iconAddFiles"
 			/>
 		</div>
 	</div>
 );
 
-export default Footer;
+export default FormChat;

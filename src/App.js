@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Body from './components/Body/Body';
 import Autorization  from './components/Autorization';
 
-import './App.css';
+import './App.scss';
 
 const App = () => {
 	const [autorizaton, setAutorizaton] = useState(false);

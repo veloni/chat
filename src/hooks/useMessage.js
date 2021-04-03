@@ -19,6 +19,7 @@ const useMessage = (
   const addMessage = (e) => {
 		if (e.shiftKey && e.ctrlKey) {
 			newRowTextArea();
+			scrollToBottom();  
 			return;
 		}
 
@@ -29,11 +30,7 @@ const useMessage = (
 
 			if (!inputMessage.current.value) { return; }
 
-			const checkSpace = inputMessage.current.value.slice(-1) === '\n';
-
-			if (checkSpace) {
-				inputMessage.current.value.substring(0, inputMessage.current.value.length - 1);	
-			}
+			inputMessage.current.value = inputMessage.current.value.trim();	
 			
 			if (editTextState) { 
 				editerMessage();
@@ -97,9 +94,8 @@ const useMessage = (
 	};
 
 	const lengthСheck = () => {
-		if (Number.isInteger(inputMessage.current.value.length / 64)) {
-			newRowTextArea();
-		}
+		const valueLenght = Number.isInteger((inputMessage.current.value.length + 1) / 70);
+		valueLenght && newRowTextArea();
 	};
 
 	const newRowTextArea = () => {

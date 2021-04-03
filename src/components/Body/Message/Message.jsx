@@ -6,9 +6,7 @@ const Message = ({
   item,
   createPopUp,
  }) => (
-  <div 
-    className="wrapper-message"
-  >
+  <div className="wrapper-message">
     <div 
       id={item.id} 
       className="wrapper-message-text"

@@ -1,10 +1,10 @@
-.wrapper-footer {
+.wrapper-form-chat {
   width: 100%;
   display: flex;
   flex-direction: row;
 }
 
-.wrapper-icon-footer {
+.wrapper-icon-form-chat {
   width: 80px;
   display: flex;
   align-items: center;
@@ -14,17 +14,18 @@
 .wrapper-icon-for-backgrond-image {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-direction: column;
 }
 
-.icon-footer {
+.icon-form-chat {
   height: 20px;
   width: 20px;
   cursor: pointer;
 }
 
 .wrapper-text-area-message {
+  padding-bottom: 10px;
   padding-left: 10px;
   display: flex;
   align-items: center;
@@ -32,10 +33,11 @@
 }
 
 .text-area-message {
-  font-size: 15px;
+  font-size: 2vw;
   width: 95%;
   height: 90%;
   resize: none;
+  outline: none;
   border: none;
 }
 

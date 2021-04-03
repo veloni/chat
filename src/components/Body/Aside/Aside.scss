@@ -87,8 +87,6 @@
 }
 
 .wrapper-aside-for-button-and-search {
-  height: 95%;
-  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -101,12 +99,12 @@
 
 .wrapper-find-text-message {
   padding-left: 5px;
-  font-size: 20px;
+  font-size: 1vw;
 }
 
 .wrapper-find-nick-name {
   padding-left: 5px;
-  font-size: 17px;
+  font-size: 1.2vw;
   color: grey;
 }
 
@@ -114,5 +112,5 @@
   padding-top: 2px;
   margin-right: 2px;
   color: #b8b4b4;
-  font-size: 14px;
+  font-size: 1vw;
 }

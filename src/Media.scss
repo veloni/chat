@@ -1,0 +1,29 @@
+@media (max-device-width: 500px) {
+  .button-clear-storage {
+    font-size: 10px
+  }
+
+  .icon-chats {
+    font-size: 13px;
+    margin-left: 1px;
+  }
+
+  .wrapper-aside {
+    display: none;
+  }
+
+  .wrapper-main-body-two {
+    justify-content: center;
+  }
+
+  .wrapper-message {
+    padding-right: 45px;
+  }
+}
+
+@media (max-device-width: 900px) {
+  .wrapper-aside {
+    display: none;
+  }
+}
+
