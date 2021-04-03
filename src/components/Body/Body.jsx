@@ -58,12 +58,11 @@ const Body = () => {
 	const [
 		foundMessageFunChat,
 		foundMessageWorkChat,
-		fondMessageActive,
+		foundMessageActive,
 		inputSearchRef,
 		clearSearch,
 		searchMessage,
 		seeMessage,
-		lengthСheck,
 	] = useSearch(
 		switchСhat, 
 		inputMessage, 
@@ -85,7 +84,7 @@ const Body = () => {
     checkPoUpEditClick,
   ] = useMessagePopUp(
 		switchСhat, 
-		fondMessageActive,
+		foundMessageActive,
 		setFunChatHistory, 
 		setWorkChatHistory, 
 		inputMessage, 
@@ -97,6 +96,8 @@ const Body = () => {
 		setLocalStorage,
     addMessage,
     addSticker,
+		rowTextArea,
+		lengthСheck,
 	] = useMessage(
 		inputMessage,
 		switchСhat,
@@ -107,26 +108,18 @@ const Body = () => {
 		editTextState,
 		editerMessage,
 		scrollToBottom,
-	 );
+	);
 
 	const checkPopUps = (e) => {
 		checkPoUpEditClick(e);
 		statePopUpSelectSmile && checkPoUpSmile(e);
 	};
 
-
 	return (
 		<div 
 			className="wrapper-main"
 			onClick={(e) => checkPopUps(e)}
 		>
-			{statePopUpEditMessage && <PopUpEditMessage
-				popUpEditRef={popUpEditRef}
-				mousePositionX={mousePositionX}
-				mousePositionY={mousePositionY}
-				deleteMessage={deleteMessage}
-				editMessage={editMessage}
-			/>}
 			<Aside
 				foundMessageFunChat={foundMessageFunChat}
 				foundMessageWorkChat={foundMessageWorkChat}
@@ -174,7 +167,15 @@ const Body = () => {
 					editTextState={editTextState}
 					closeEditor={closeEditor}
 					lengthСheck={lengthСheck}
+					rowTextArea={rowTextArea}
 				/>
+				{statePopUpEditMessage && <PopUpEditMessage
+					popUpEditRef={popUpEditRef}
+					mousePositionX={mousePositionX}
+					mousePositionY={mousePositionY}
+					deleteMessage={deleteMessage}
+					editMessage={editMessage}
+				/>}
 			</div>
 		</div>
 	);

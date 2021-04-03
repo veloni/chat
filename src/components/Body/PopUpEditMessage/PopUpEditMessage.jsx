@@ -30,6 +30,6 @@ const PopUpEditMessage = ({
 			Удалить 
 		</div>
 	</div>
-	);
+);
 
 export default PopUpEditMessage;

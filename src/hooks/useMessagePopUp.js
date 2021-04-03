@@ -4,7 +4,7 @@ import { getDataFromLocalStorage, setDataFromLocalStorage } from '../helper';
 
 const useMessagePopUp = (
   switchСhat, 
-  fondMessageActive,
+  foundMessageActive,
   setFunChatHistory, 
   setWorkChatHistory, 
   inputMessage, 
@@ -22,7 +22,7 @@ const useMessagePopUp = (
 	const createPopUp = (e, id) => {
     setWhatClick(id);
 
-    fondMessageActive && document.getElementById(id).classList.remove('find-message');
+    foundMessageActive && document.getElementById(id).classList.remove('find-message');
 
     setMousePositionX(`${e.nativeEvent.pageX}px`);
     setMousePositionY(`${e.nativeEvent.pageY}px`);

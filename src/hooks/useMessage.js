@@ -1,6 +1,7 @@
 import sticker from '../sticker/sticker.png';
 
 import { setDataFromLocalStorage } from '../helper';
+import { useState } from 'react';
 
 const useMessage = (
 	inputMessage,
@@ -13,10 +14,11 @@ const useMessage = (
 	editerMessage,
 	scrollToBottom,
 ) => {
+	const [rowTextArea, setRowTextArea] = useState(2);
 
   const addMessage = (e) => {
 		if (e.shiftKey && e.ctrlKey) {
-			inputMessage.current.value = `${inputMessage.current.value}\n`;
+			newRowTextArea();
 			return;
 		}
 
@@ -24,8 +26,15 @@ const useMessage = (
 
 		if (e.key === 'Enter') {
 			e.preventDefault();
+
 			if (!inputMessage.current.value) { return; }
 
+			const checkSpace = inputMessage.current.value.slice(-1) === '\n';
+
+			if (checkSpace) {
+				inputMessage.current.value.substring(0, inputMessage.current.value.length - 1);	
+			}
+			
 			if (editTextState) { 
 				editerMessage();
 				return;
@@ -35,6 +44,8 @@ const useMessage = (
 			!switchСhat && setData(workChatHistory, setWorkChatHistory, e);
 
 			scrollToBottom();  
+
+			setRowTextArea(2);
 
 			inputMessage.current.value = ''; 
 		}
@@ -85,10 +96,25 @@ const useMessage = (
 		!switchСhat && setDataFromLocalStorage('workChat', workChatHistory);
 	};
 
+	const lengthСheck = () => {
+		if (Number.isInteger(inputMessage.current.value.length / 64)) {
+			newRowTextArea();
+		}
+	};
+
+	const newRowTextArea = () => {
+		rowTextArea !== 5 && setRowTextArea(rowTextArea + 1);
+		if (inputMessage.current.value) {
+			inputMessage.current.value = `${inputMessage.current.value}\n`;
+		}
+	}
+
   return [
 		setLocalStorage,
 		addMessage,
 		addSticker,
+		rowTextArea,
+		lengthСheck,
   ];
 };
 

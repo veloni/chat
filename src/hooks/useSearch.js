@@ -11,7 +11,7 @@ const useSearch = (
 	const [foundMessageFunChat, setFoundMessageFunChat] = useState([]);
 	const [foundMessageWorkChat, setFoundMessageWorkChat] = useState([]);
 	const [arrayFindMessage, setArrayFindMessage] = useState([]);
-	const [fondMessageActive, setFondMessageActive] = useState(false);
+	const [foundMessageActive, setFondMessageActive] = useState(false);
 
 	const inputSearchRef = useRef(null); 
 
@@ -83,21 +83,14 @@ const useSearch = (
 		return (getDataFromLocalStorage('workChat'));
 	};
 	
-	const lengthСheck = () => {
-		if (Number.isInteger(inputMessage.current.value.length / 64)) {
-			inputMessage.current.value = `${inputMessage.current.value}\n`;
-		}
-	};
-
 	return [
 		foundMessageFunChat,
 		foundMessageWorkChat,
-		fondMessageActive,
+		foundMessageActive,
 		inputSearchRef,
 		clearSearch,
 		searchMessage,
 		seeMessage,
-		lengthСheck,
   ];
 };
 

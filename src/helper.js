@@ -5,3 +5,8 @@ export const getDataFromLocalStorage = (key) => (
 export const setDataFromLocalStorage = (key, data) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
+
+export const clearStorage = () => {
+  localStorage.clear();
+  window.location.reload();
+};

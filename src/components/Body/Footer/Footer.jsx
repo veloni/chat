@@ -20,38 +20,39 @@ const Footer = ({
 	loadBackgroundImage,
 	deleteBackgroundImage,
 	lengthСheck,
+	rowTextArea,
 }) => (
 	<div className="wrapper-footer">
-			<div className="wrapper-icon-for-backgrond-image">
-				<div className="wrapper-icon-edit-delete">
-					<img 
+		<div className="wrapper-icon-for-backgrond-image">
+			<div className="wrapper-icon-edit-delete">
+				<img 
 					src={iconBackground} 
 					className="icon-footer" 
 					alt="iconAddFiles"
 					onClick={() => loadBackgroundImage()}
 				/>
-				</div>
-				<div className="wrapper-icon-edit-delete">
-					<img 
-						onClick={() => deleteBackgroundImage()}
-						src={iconClose} 
-						className="icon-close" 
-						alt="iconAddFiles"
-					/>
-				</div>
+			</div>
+			<div className="wrapper-icon-edit-delete">
+				<img 
+					onClick={() => deleteBackgroundImage()}
+					src={iconClose} 
+					className="icon-close" 
+					alt="iconAddFiles"
+				/>
+			</div>
 		</div>
 		<div className="wrapper-text-area-message">
 			<textarea 
 				ref={inputMessage}
-				onChange={(e) => lengthСheck()}
+				onChange={() => lengthСheck()}
 				onKeyDown={(e) => addMessage(e)}
 				className="text-area-message"
-				placeholder="Write a message"
-			>
-			</textarea>
+				placeholder="Введите сообщение"
+				rows={rowTextArea}
+			/>
 		</div>
 		{editTextState && (
-			<div clasname="wrapper-icon-for-edit">
+			<div clasName="wrapper-icon-for-edit">
 				<div className="wrapper-icon-edit-delete">
 					<img 
 						src={iconEdit} 
@@ -77,8 +78,6 @@ const Footer = ({
 				className="icon-footer" 
 				alt="iconAddFiles"
 			/>
-		</div>
-		<div className="wrapper-icon-footer">
 			<img 
 				onMouseDown={() => addSticker()}
 				onMouseUp={() => setLocalStorage()}

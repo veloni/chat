@@ -12,7 +12,7 @@ const useFunWorkChat = () => {
   useEffect(() => {
     setTimeout(() => {
       mainBodyRef.current.scrollTo(0, mainBodyRef.current.scrollHeight);
-    }, 1);
+    }, );
   }, []);
   
   useEffect(() => {
