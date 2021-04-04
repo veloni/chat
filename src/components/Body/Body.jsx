@@ -69,10 +69,9 @@ const Body = () => {
 		seeMessage,
 	] = useSearch(
 		switchСhat, 
-		inputMessage, 
 		setIsSearch, 
 		isSearch,
-	 );
+	);
 
 	const [
 		mousePositionX, 

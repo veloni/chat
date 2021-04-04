@@ -14,11 +14,11 @@ const useSwitchChat = (scrollToBottom) => {
     switcherChat(false, false);
 	};
 
-  const switcherChat = (oneBol, twoBol) => {
-    setIsSearch(oneBol); 
-		setSwitchChat(twoBol);
+  const switcherChat = (isSearch, isSwitch) => {
+    setIsSearch(isSearch); 
+		setSwitchChat(isSwitch);
     scrollToBottom();
-    setDataFromLocalStorage('isTypeChat', twoBol);
+    setDataFromLocalStorage('isTypeChat', isSwitch);
   }
 
   return [

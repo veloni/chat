@@ -5,7 +5,7 @@ import './Message.scss';
 const Message = ({
   item,
   createPopUp,
- }) => (
+}) => (
   <div className="wrapper-message">
     <div 
       id={item.id} 

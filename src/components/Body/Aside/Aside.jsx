@@ -17,19 +17,19 @@ const Aside = ({
 }) => (
 	<div className="wrapper-aside"> 
 		<div className="wrapper-search-input-icon">
-				<input
-					className="input-search"
-					ref={inputSearchRef}
-					onChange={(e) => searchMessage(e)}
+			<input
+				className="input-search"
+				ref={inputSearchRef}
+				onChange={(e) => searchMessage(e)}
+			/>
+			<div className="wraper-search-icon">
+				<img 
+					src={isSearch ? iconClose : iconSearch} 
+					className={isSearch ? "close-icon-search" : "icon-search"} 
+					alt="iconSearch"
+					onClick={() => clearSearch()}
 				/>
-				<div className="wraper-search-icon">
-					<img 
-						src={isSearch ? iconClose : iconSearch} 
-						className={isSearch ? "close-icon-search" : "icon-search"} 
-						alt="iconSearch"
-						onClick={() => clearSearch()}
-					/>
-				</div>
+			</div>
 			</div>
 		<div className="wrapper-find-message">
 			{switchСhat && 
@@ -38,7 +38,7 @@ const Aside = ({
 				<div 
 					key={key}
 					className="wrapper-found-message"
-					onClick={(e) => seeMessage(item.id)}
+					onClick={() => seeMessage(item.id)}
 				>
 					<div className="wrapper-find-message-nick-name">
 						<div className="wrapper-find-nick-name">
@@ -56,27 +56,26 @@ const Aside = ({
 			{!switchСhat && 
 			!!foundMessageWorkChat && 
 			foundMessageWorkChat.map((item, key) => (
-			<div 
-				key={key}
-				className="wrapper-found-message"
-				onClick={(e) => seeMessage(item.id)}
-			>
-				<div className="wrapper-find-message-nick-name">
-					<div className="wrapper-find-nick-name">
-						{item.nickName}
+				<div 
+					key={key}
+					className="wrapper-found-message"
+					onClick={() => seeMessage(item.id)}
+				>
+					<div className="wrapper-find-message-nick-name">
+						<div className="wrapper-find-nick-name">
+							{item.nickName}
+						</div>
+						<div className="wrapper-find-text-message">
+							{item.message}
+						</div>
 					</div>
-					<div className="wrapper-find-text-message">
-						{item.message}
+					<div className="wrapper-time">
+						{item.date}
 					</div>
 				</div>
-				<div className="wrapper-time">
-					{item.date}
-				</div>
-			</div>
-		))} 
+			))} 
 		</div>
 	</div>
 );
-
 
 export default Aside;

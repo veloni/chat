@@ -27,8 +27,8 @@ const Autorization = ({ autorizaton, setAutorizaton }) => {
 
 		if (!isAutorizationPassed) { return; }
 
-		setDataFromLocalStorage('userLogin', loginValue);  
-		setDataFromLocalStorage('userPassword', passwordValue);  
+		setDataFromLocalStorage('userLogin', loginValue);
+		setDataFromLocalStorage('userPassword', passwordValue);
 		setDataFromLocalStorage('entranceDone', true)
 
     setAutorizaton(true);
@@ -64,26 +64,24 @@ const Autorization = ({ autorizaton, setAutorizaton }) => {
 							className="input-login"
 							defaultValue={loginValue}
 							onChange={(e) => handleLoginChange(e.target.value)}
-						>
-						</input>
+						/>
 					</div>
 					<div className="wrapper-password">
-					<span className="text-autoriztion">
+						<span className="text-autoriztion">
 							password
 						</span>
 						<input
 							className="input-password"
 							defaultValue={passwordValue}
 							onChange={(e) => handlePasswordChange(e.target.value)}
-						>
-						</input>
+						/>
 					</div>
 					<button
 						className="autorization"
 						onClick={() => checkLoginPass()}
 					>
-					login
-				</button>
+						login
+					</button>
 				</div>
 			</div>
 		</div>

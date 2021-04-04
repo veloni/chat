@@ -25,8 +25,9 @@ const useMessage = (
 		}
  
 		if (e.key === 'Backspace') {
-			setBackSpaceDown(true);
 			const valueLenght = Number.isInteger((inputMessage.current.value.length - 1) / 50); 
+
+			setBackSpaceDown(true);
 			valueLenght && setRowTextArea(rowTextArea - 1);
 			return;
 		}
@@ -112,9 +113,7 @@ const useMessage = (
 	};
 
 	const newRowTextArea = () => {
-		if (backSpaceDown) {
-			return;
-		}
+		if (backSpaceDown) { return; }
 		
  	 	rowTextArea !== 5 && setRowTextArea(rowTextArea + 1);  
 			

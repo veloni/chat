@@ -46,7 +46,7 @@ const useMessagePopUp = (
     localHistory.forEach(function(item, index) {
       if (item.id === whatClick) {
         localHistory.splice(index, 1);
-      return;
+        return;
       }
     });
 
@@ -68,7 +68,7 @@ const useMessagePopUp = (
     localHistory = giveLocalHistory();
 
     localHistory.forEach(function(item) {
-      if (item.isImg === true) { 
+      if (item.isImg) { 
         setEditTextState(false);
         return;
       }

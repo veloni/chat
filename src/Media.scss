@@ -7,19 +7,33 @@
     font-size: 13px;
     margin-left: 1px;
   }
-
-  .wrapper-aside {
-    display: none;
-  }
-
+  
   .wrapper-main-body-two {
     justify-content: center;
   }
+}
 
+@media (max-device-width: 600px) {
+  .wrapper-aside {
+    display: none;
+  }
   .wrapper-message {
     padding-right: 45px;
   }
+  
+  .text-in-message {
+    font-size: 20px;
+  }
+
+  .wrapper-nick-name {
+    font-size: 15px;
+  }
+
+  .time-in-message {
+    font-size: 15px;
+  }
 }
+
 
 @media (max-device-width: 900px) {
   .wrapper-aside {

@@ -5,7 +5,7 @@ const usePopUpSmiles = (inputMessage) => {
 	const popUpSmile = useRef(null);
 
 	const checkPoUpSmile = (e) => {
-		const isPopUpSmile = (statePopUpSelectSmile && e.target !== popUpSmile);
+		const isPopUpSmile = statePopUpSelectSmile && e.target !== popUpSmile;
 		isPopUpSmile && setStatePopUpSelectSmile(!isPopUpSmile);
 	};
 

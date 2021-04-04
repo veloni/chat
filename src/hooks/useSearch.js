@@ -4,7 +4,6 @@ import { getDataFromLocalStorage } from '../helper';
 
 const useSearch = (
 	switchСhat, 
-	inputMessage, 
 	setIsSearch, 
 	isSearch,
 ) => {
@@ -32,7 +31,7 @@ const useSearch = (
 			if (item.message.toLowerCase().includes(inputSearchRef.current.value.toLowerCase())) {
 				let triplePoint = '...';
 
-				if (item.isImg === true) { return; }
+				if (item.isImg) { return; }
 
 				if (item.message.length < 20) { 
 					triplePoint = '';
