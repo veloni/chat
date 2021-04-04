@@ -6,6 +6,6 @@ const useScroll = (mainBodyRef) => {
 	}; 
 
   return scrollToBottom;
-}
+};
 
 export default useScroll;

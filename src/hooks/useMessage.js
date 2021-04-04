@@ -84,7 +84,7 @@ const useMessage = (
 				isImg,
 			},
 		]);
-	} 
+	}; 
 
 	const giveDate = () => {
 		const date = new Date();
@@ -119,10 +119,11 @@ const useMessage = (
  	 	rowTextArea !== 5 && setRowTextArea(rowTextArea + 1);  
 			
 		scrollToBottom();  
+		
 		if (inputMessage.current.value) {
 			inputMessage.current.value = `${inputMessage.current.value}\n`;
 		}
-	}
+	};
 
   return [
 		setLocalStorage,

@@ -116,7 +116,7 @@ const Body = () => {
 	);
 
 	const [
-		checkPopUps
+		checkPopUps,
 	] = useCheckPopUps(
 		checkPoUpEditClick, 
 		statePopUpSelectSmile, 

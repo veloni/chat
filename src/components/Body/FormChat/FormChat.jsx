@@ -52,7 +52,7 @@ const FormChat = ({
 			/>
 		</div>
 		{editTextState && (
-			<div clasName="wrapper-icon-for-edit">
+			<div className="wrapper-icon-for-edit">
 				<div className="wrapper-icon-edit-delete">
 					<img 
 						src={iconEdit} 
